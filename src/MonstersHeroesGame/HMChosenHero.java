@@ -75,7 +75,7 @@ public class HMChosenHero {
                 }
                 oneHand=weapons.get(index-1);
                 if(Integer.parseInt(weapons.get(index-1).hands)==2){
-                    otherHand=weapons.get(index);
+                    otherHand=weapons.get(index-1);
                 }
                 else if(Integer.parseInt(weapons.get(index-1).hands)==1){
                     otherHand=null;
@@ -130,8 +130,7 @@ public class HMChosenHero {
             }
         }while(true);
     }
-    public HMBattleMove takeBattleTurn(HMBattleMove battleMv){
-        HMBattleMove battleMove=new HMBattleMove();
+    public HMBattleMove takeBattleTurn(HMBattleMove battleMove){
         String[] input={"Enter 1 to Attack using Weapon","Enter 2 to use a Spell","Enter 3 to use a Portion","Enter 4 to equip another weapon","Enter 5 to see Hero Stats"};
         do{
 

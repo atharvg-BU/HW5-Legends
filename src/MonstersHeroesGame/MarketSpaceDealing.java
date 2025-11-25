@@ -58,7 +58,7 @@ public class MarketSpaceDealing {
     }
 
     public void mktEnter(HMMarketGameMove mktMove, HMChosenHero hero){
-        String[] buySellMsgs={"Welcome to the Market!","Here you can Buy/Sell Items","Enter B/b to Buy an Item","Enter S/s to Sell an Item","Enter N/n to Exit MarketSpace"};
+        String[] buySellMsgs={"Welcome to the Market!","Here you can Buy/Sell Items","Enter B/b to Buy an Item","Enter S/s to Sell an Item","Enter N/n to Exit MarketSpace","Enter 0 to go back"};
         do {
             String buySell = printer.getInput(buySellMsgs);
             if(buySell.equalsIgnoreCase("q")){
@@ -82,6 +82,13 @@ public class MarketSpaceDealing {
                 mktMove.leaveMkt=true;
                 break;
             }
+            if(buySell.equalsIgnoreCase("0")){
+                return;
+            }
+            if(mktMove.leaveMkt){
+                System.out.println("Leaving the Market! Thank you for Shopping");
+                return;
+            }
         }while (true);
         if(mktMove.quit){
             return;
@@ -89,7 +96,7 @@ public class MarketSpaceDealing {
     }
 
     public void mktBuy(HMMarketGameMove mktMove, HMChosenHero hero){
-        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Potions","Enter 3 to buy Spells","Enter 4 to buy Armor", "Enter 0 to go back","Enter N/n to go exit the market"};
+        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Armors","Enter 3 to buy Spells","Enter 4 to buy Armor", "Enter 0 to go back","Enter N/n to go exit the market"};
         do {
             if(mktMove.leaveMkt){
                 return;
@@ -111,6 +118,7 @@ public class MarketSpaceDealing {
                         buyWeapon(mktMove,hero);
                         break;
                     case 2:
+                        System.out.println("In Buy Armor case");
                         buyArmor(mktMove,hero);
                         break;
                     case 3:
@@ -196,16 +204,16 @@ public class MarketSpaceDealing {
             return;
         }
         System.out.printf(
-                "%-6s %-22s %-8s %-10s%n",
-                "Name", "Cost", "Required Level", "Damage Reduction"
+                "%-6s %-22s %-8s %-10s %-10s%n",
+                "Index", "Name", "Cost", "Required Level", "Damage Reduction"
         );
         String[] armoryIn={"Please Enter the index of the Armor you want to purchase"};
 
         int k = 1;
-        for (Armory a : armory.armoryAll) {
+        for (Armory a : armoryAll) {
             List<String> oneArmor = a.getArmoryDetails();
             System.out.printf(
-                    "%-6d %-22s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                    "%-6d %-22s %-8s %-10s %-10s%n",
                     k++,
                     oneArmor.get(0),
                     oneArmor.get(1),
@@ -228,7 +236,7 @@ public class MarketSpaceDealing {
                     System.out.println("Please enter a valid Index ...");
                     continue;
                 }
-                Armory selected=armoryAll.get(p);
+                Armory selected=armoryAll.get(p-1);
                 if(Integer.parseInt(selected.cost)>hero.money){
                     System.out.println("You don't have enough money to do that");
                     continue;
@@ -382,7 +390,7 @@ public class MarketSpaceDealing {
                     portionSell(mktMove,hero);
                     break;
                 default:
-                        System.out.println("Please enter a valid Input ...");
+                    System.out.println("Please enter a valid Input ...");
             }
         }while(true);
     }

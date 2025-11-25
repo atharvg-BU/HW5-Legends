@@ -134,12 +134,20 @@ public class HMGamePlayer extends GameUser {
     }
 
     public boolean mktMove(MarketSpaceDealing marketSpaceDealing){
-        String[] st=new  String[chosenHeroes.size()];
+        String[] st=new  String[chosenHeroes.size()+1];
         for (int i = 0; i < chosenHeroes.size(); i++) {
             st[i]=("Enter " + i + " if you wish to enter the market with Hero " + chosenHeroes.get(i).name);
         }
+        st[st.length-1]="Enter N/n to exit the Market";
         do {
             String inp=printer.getInput(st);
+            if(inp.equalsIgnoreCase("n")){
+                System.out.println("Leaving the Market");
+                return true;
+            }
+            if(inp.equalsIgnoreCase("q")){
+                return false;
+            }
             try{
                 int in =Integer.parseInt(inp);
                 if(in<1 || in>chosenHeroes.size()){
@@ -148,9 +156,15 @@ public class HMGamePlayer extends GameUser {
                 }
                 HMMarketGameMove move=new HMMarketGameMove();
                 marketSpaceDealing.mktEnter(move,chosenHeroes.get(in));
-                break;
+                if(move.leaveMkt){
+                    break;
+                }
+                if(move.quit){
+                    break;
+                }
             }
             catch(Exception e){
+                System.out.println(e.getMessage());
                 System.out.println("Please enter a valid input...");
                 continue;
             }
@@ -168,7 +182,7 @@ public class HMGamePlayer extends GameUser {
                 System.out.println("Reviving Hero "+h.name);
                 h.money=h.money/2;
                 h.mana=h.mana/2;
-                h.level=h.experience/2;
+                h.health=(h.level*100)/2.0;
             }
             else{
                 for(MonsterSpawn m:monsterSpawns){
@@ -182,9 +196,27 @@ public class HMGamePlayer extends GameUser {
                     h.money+=h.level*50;
                     h.mana+=h.level*5;
                     h.health=h.level*100;
+                    if(h.heroType.equals("Warriors")){
+                        h.strength=(int)(h.strength*1.1);
+                        h.agility=(int)(h.agility*1.1);
+                        h.dexterity=(int)(h.dexterity*1.05);
+                    }
+
+                    if(h.heroType.equals("Paladins")){
+                        h.strength=(int)(h.strength*1.1);
+                        h.agility=(int)(h.agility*1.05);
+                        h.dexterity=(int)(h.dexterity*1.1);
+                    }
+
+                    if(h.heroType.equals("Sorcerers")){
+                        h.strength=(int)(h.strength*1.05);
+                        h.agility=(int)(h.agility*1.1);
+                        h.dexterity=(int)(h.dexterity*1.1);
+                    }
                 }
                 else{
                     h.health=h.level*100;
+                    h.mana= (int) (h.mana*1.2);
                 }
             }
 
@@ -196,4 +228,12 @@ public class HMGamePlayer extends GameUser {
         return defeatedMonsters.size();
     }
 
+    public boolean notDefeated(Monsters m){
+        for(String s:defeatedMonsters){
+            if(s.equals(m.getName())){
+                return false;
+            }
+        }
+        return true;
+    }
 }

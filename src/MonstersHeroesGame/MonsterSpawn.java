@@ -36,4 +36,9 @@ public class MonsterSpawn {
         battleMove.hpDamage=damage;
         return battleMove;
     }
+
+    public HMBattleMove takeBattleTurn(HMBattleMove battleMove){
+        battleMove.hpDamage=damage;
+        return battleMove;
+    }
 }

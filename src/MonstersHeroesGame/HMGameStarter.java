@@ -19,6 +19,7 @@ public class HMGameStarter extends Starter {
     private MonstersSingleton monstersInstance;
     private MarketSpaceDealing marketSpaceDealing;
     private String winner;
+    private boolean quit;
 
 
     public HMGameStarter() {
@@ -101,8 +102,16 @@ public class HMGameStarter extends Starter {
 //                    success=true;
                 }while(!success);
                 if(marketArr){
-                    System.out.println("Entering the market");
-                    boolean mv=player.mktMove(marketSpaceDealing);
+                    do {
+                        String inp=printer.getInput(new String[]{"Do you Wish to enter the market","Enter M/m to enter the market","Enter N/n to skip"});
+                        if(inp.equalsIgnoreCase("m")){
+                            System.out.println("Entering the market");
+                            boolean mv = player.mktMove(marketSpaceDealing);
+                        }
+                        if(inp.equalsIgnoreCase("n")){
+                            break;
+                        }
+                    }while (true);
                 }
                 else{
                     int luck=spinDice();
@@ -117,11 +126,18 @@ public class HMGameStarter extends Starter {
                         }
                         spawnedMonsters=spawnedMonsters.subList(0,max);
                         for(Monsters m:spawnedMonsters){
-                            sp.add(new MonsterSpawn(m.getName(),Integer.parseInt(m.getLevel()),Integer.parseInt(m.getDamage()),Integer.parseInt(m.getDefense()),Integer.parseInt(m.getDodgeChance())));
+                            if(player.notDefeated(m)) {
+                                sp.add(new MonsterSpawn(m.getName(), Integer.parseInt(m.getLevel()), Integer.parseInt(m.getDamage()), Integer.parseInt(m.getDefense()), Integer.parseInt(m.getDodgeChance())));
+                            }
                         }
 
                         HMBattle battle=new HMBattle(player.chosenHeroes,sp);
                         battle.battleStart();
+                        winner=battle.battleWinner;
+                        if(winner.equals("Monsters")){
+                            break;
+                        }
+                        player.wonBattleTurn(sp);
                     }
                     else{
                         System.out.println("Pheww! That was close. The monsters went by without noticing you");
@@ -134,7 +150,17 @@ public class HMGameStarter extends Starter {
     }
 
     public void endGame() {
-
+        if(quit){
+            System.out.println("Since you have quit the game, the Monsters Win");
+            System.out.println("Quitting Game ...");
+        }
+        if(winner.equals("Monsters")){
+            System.out.println("All Your Heroes Have Been Defeated! Monsters Win!");
+        }
+        else{
+            System.out.println("You Win!!");
+            System.out.println("Your Heroes Have Defeated all the Monsters!");
+        }
     }
 
     public void addUsers(int n){

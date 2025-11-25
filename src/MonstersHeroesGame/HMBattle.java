@@ -1,5 +1,6 @@
 package MonstersHeroesGame;
 
+import MonstersHeroesGame.Data.MainData.Armory;
 import MonstersHeroesGame.Data.MainData.Heroes;
 
 import java.util.*;
@@ -73,7 +74,7 @@ public class HMBattle {
                     System.out.println(battleMv.opponent);
                     battleMv=h.takeBattleTurn(battleMv);
                     if(!battleMv.selfHeal && !dodge(monsters.get(in-1).dodgeChance/100.0)){
-                        monsters.get(in-1).hp-= battleMv.hpDamage;
+                        monsters.get(in-1).hp-= (battleMv.hpDamage-(monsters.get(in-1).defense/100.0));
                     }
                     else{
                         if(battleMv.selfHeal){
@@ -87,6 +88,17 @@ public class HMBattle {
                 catch (Exception e){
                     printer.displayMsgs(invalid);
                 }
+                boolean flag=false;
+                for(MonsterSpawn m:monsters){
+                    if(!m.defeated){
+                        flag=true;
+                    }
+                }
+                if(!flag){
+                    System.out.println("All Monsters Have Been Defeated");
+                    System.out.println("Heroes Win the battle");
+                    battleWinner="Heroes";
+                }
             }
 
             for(MonsterSpawn m:monsters){
@@ -95,26 +107,39 @@ public class HMBattle {
                 int minInd=0;
                 HMChosenHero chosenHero=heroes.get(0);
                 for(int i=0;i<heroes.size();i++){
-                    if(heroes.get(i).health<minHp){
+                    if(heroes.get(i).health>0 && heroes.get(i).health<minHp){
                         minHp=heroes.get(i).health;
                         minInd=i;
                         chosenHero=heroes.get(i);
                     }
                 }
                 battleMv.opponent=heroes.get(minInd).name;
-                battleMv.hpDamage=m.damage;
                 if(dodge(chosenHero.agility*0.002)){
-                    System.out.println("Hero"+chosenHero.name+ " dodged your attack");
+                    System.out.println("Hero "+chosenHero.name+ " dodged "+m.name+"'s attack");
                 }
                 else{
-                    chosenHero.health-= (battleMv.hpDamage/100.0)+10;
+                    battleMv=m.takeBattleTurn(battleMv);
+                    if(chosenHero.otherHand!=null && chosenHero.otherHand instanceof Armory) {
+                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0));
+                    }
+
                     if(chosenHero.health<=0){
                         System.out.println(chosenHero.name+" has fainted");
                         chosenHero.fainted=true;
                     }
                 }
 
-
+                boolean flag=false;
+                for(HMChosenHero h:heroes){
+                    if(!h.fainted){
+                        flag=true;
+                    }
+                }
+                if(!flag){
+                    System.out.println("All Heroes Have Been Defeated");
+                    System.out.println("Monsters Win the battle");
+                    battleWinner="monsters";
+                }
             }
         }while (true);
     }
