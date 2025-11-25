@@ -107,7 +107,7 @@ public class HMBattle {
                     System.out.println("Hero"+chosenHero.name+ " dodged your attack");
                 }
                 else{
-                    chosenHero.health-= (battleMv.hpDamage/100.0)+5;
+                    chosenHero.health-= (battleMv.hpDamage/100.0)+10;
                     if(chosenHero.health<=0){
                         System.out.println(chosenHero.name+" has fainted");
                         chosenHero.fainted=true;

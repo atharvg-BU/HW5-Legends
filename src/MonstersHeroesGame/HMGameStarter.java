@@ -18,6 +18,7 @@ public class HMGameStarter extends Starter {
     private HeroesSingleton heroInstance;
     private MonstersSingleton monstersInstance;
     private MarketSpaceDealing marketSpaceDealing;
+    private String winner;
 
 
     public HMGameStarter() {
@@ -26,6 +27,7 @@ public class HMGameStarter extends Starter {
         heroInstance = HeroesSingleton.getInstance();
         monstersInstance = MonstersSingleton.getInstance();
         marketSpaceDealing = new MarketSpaceDealing();
+        winner = "";
     }
     public void startGame() {
 
@@ -318,6 +320,16 @@ public class HMGameStarter extends Starter {
                 spMonsters.clear();
             }
         }
+    }
+    public boolean checkWin(){
+        int defMon=players.get(0).getNumDefeatedMonsters();
+        if(defMon==monstersInstance.monsters.size()){
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
 }

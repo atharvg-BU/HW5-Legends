@@ -192,4 +192,8 @@ public class HMGamePlayer extends GameUser {
         return  false;
     }
 
+    public int getNumDefeatedMonsters(){
+        return defeatedMonsters.size();
+    }
+
 }
