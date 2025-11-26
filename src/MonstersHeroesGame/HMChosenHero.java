@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class HMChosenHero implements Cloneable {
+//    Class to create and store instance of chosen heroes
     public String name;
     public double health;
     public int mana;
@@ -49,6 +50,12 @@ public class HMChosenHero implements Cloneable {
         printer = new HMGamePrinter();
         refHero = ref;
     }
+
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: This function enables heroes to equip the weapon they want to fight monsters
+     */
     public void equipWeapon(){
         String[] weaponEqp={"Enter the weapon you want to equip"};
         System.out.printf(
@@ -130,6 +137,12 @@ public class HMChosenHero implements Cloneable {
             }
         }while(true);
     }
+
+    /*
+    Input: HMBattleMover variable to store information about heroes turn in battle
+    Outputs: HMBattleMove type giving information on heroes turn in battle
+    Function: Function to enable hero to take their turn by either in a battle
+     */
     public HMBattleMove takeBattleTurn(HMBattleMove battleMove){
         String[] input={"Enter 1 to Attack using Weapon","Enter 2 to use a Spell","Enter 3 to use a Portion","Enter 4 to equip another weapon","Enter 5 to see Hero Stats"};
         do{
@@ -253,6 +266,11 @@ public class HMChosenHero implements Cloneable {
         return battleMove;
     }
 
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Function to enable hero to take their turn by either moving their player/consuming portion or seeing their stats
+     */
     public void displayHeroStats(){
         System.out.printf(
                 "%-15s %-10s %-10s %-10s %-10s %-10s %-12s %-12s %-10s %-12s%n",
@@ -355,6 +373,11 @@ public class HMChosenHero implements Cloneable {
 
     }
 
+    /*
+    Input: GameMove storing informarion on the move when hero consumes a portion outside the battle
+    Outputs: N/A
+    Function: Function to enable hero to take portion outside the battle
+     */
     public void consumePortion(HMGameMove move){
         if (potions.size() == 0) {
             System.out.println("You have no Potions");
@@ -445,6 +468,12 @@ public class HMChosenHero implements Cloneable {
         }while (true);
     }
 
+    /*
+    Input: N/A
+    Outputs: Cloned object of HMChosenHero class
+    Function: Function to clone a hero to avoid lengthy process of new object creation
+     */
+    @Override
     public HMChosenHero clone() {
         try {
             return (HMChosenHero) super.clone();
@@ -453,6 +482,11 @@ public class HMChosenHero implements Cloneable {
         }
     }
 
+    /*
+    Input: Initial values to be set to global variables of cloned objects
+    Outputs: N/A
+    Function: Function to set the initial values of global variables when object is cloned
+     */
     public void setValues(Heroes ref,String name, int mana, int strength, int agility, int dexterity, int money, int experience, String heroType){
         this.heroType = heroType;
         this.name = name;

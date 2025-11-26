@@ -21,6 +21,11 @@ public class HMBattle {
         this.quit=false;
     }
 
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Function to do the basic printing when a battle starts between heroes and monsters
+     */
     public void startPrint(){
         System.out.print("Battle is between ");
         for(HMChosenHero h:heroes){
@@ -33,6 +38,11 @@ public class HMBattle {
         System.out.println();
     }
 
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Function to start the battle between heroes and monsters
+     */
     public void battleStart(){
         startPrint();
         String[] monsterAttack={"Please select which Monster you want to attack"};
@@ -175,6 +185,12 @@ public class HMBattle {
         }while (true);
 
     }
+
+    /*
+    Input: Dodge Chance of a Hero/Monster
+    Outputs: Boolean value telling if the character has successfully dodged opponents attack or not
+    Function: Function to return True/False based on whether the character has dodged its opponent's attack
+     */
     public boolean dodge(double dodgeChance){
         double r=Math.random();
         if(r<=(dodgeChance)){
