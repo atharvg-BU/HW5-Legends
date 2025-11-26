@@ -312,7 +312,6 @@ public class MarketSpaceDealing {
                     }
                 else {
                     hero.potions.add(selected);
-                    portionAll.remove(selected);
                     hero.money-=Integer.parseInt(selected.portionCost);
                     System.out.println("Hero "+hero.name+" has purchased "+selected.portionName+" for "+selected.portionCost);
                     break;

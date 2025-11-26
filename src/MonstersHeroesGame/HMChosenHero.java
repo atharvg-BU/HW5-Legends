@@ -362,16 +362,32 @@ public class HMChosenHero implements Cloneable {
         }
         System.out.println("Portions:");
         System.out.printf(
-                "%-6s %-22s %-30s %-12s%n",
-                "Index", "Name", "Attribute Increase", "Attribute Affected"
+                "%-6s %-22s %-30s %-12s %-12s%n",
+                "Index", "Name", "Attribute Increase", "Attribute Affected","Units"
         );
         int k=1;
-        for(Portion w : potions){
-            System.out.printf("%-6s %-22s %-30s %-12s%n",
+        for(int i=0;i<potions.size();i++){
+            int units=0;
+            boolean rep=false;
+            for(int j=0;j<potions.size();j++){
+                if(potions.get(i).portionName.equals(potions.get(j).portionName)){
+                    if(j<i){
+                        rep=true;
+                        break;
+                    }
+                    units++;
+                }
+
+            }
+            if(rep){
+                continue;
+            }
+            System.out.printf("%-6s %-22s %-30s %-12s %-12s%n",
                     k++,
-                    w.portionName,
-                    w.attributeIncrease,
-                    w.attributeAffected
+                    potions.get(i).portionName,
+                    potions.get(i).attributeIncrease,
+                    potions.get(i).attributeAffected,
+                    units
                     );
         }
         do {
@@ -379,7 +395,7 @@ public class HMChosenHero implements Cloneable {
             try {
                 int pIn = Integer.parseInt(portionIn);
 
-                if (pIn < 0 || pIn > potions.size()) {
+                if (pIn < 0 || pIn > k) {
                     System.out.println("Invalid index");
                     continue;
                 }
@@ -420,6 +436,7 @@ public class HMChosenHero implements Cloneable {
                         break;
                     }
                 }
+                potions.remove(pIn - 1);
                 break;
             }
             catch (Exception e) {
