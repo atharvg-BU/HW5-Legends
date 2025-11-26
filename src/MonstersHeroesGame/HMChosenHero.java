@@ -181,6 +181,14 @@ public class HMChosenHero implements Cloneable {
                             "%-6s %-22s %-12s %-12s%n",
                             "Index", "Name", "Damage", "Mana Cost"
                     );
+                    int k=0;
+                    for(Spell s:spells){
+                        System.out.printf("%-6s %-22s %-12s %-12s%n",
+                                k++,
+                                s.name,
+                                s.damage,
+                                s.mana);
+                    }
                     String spellIn=printer.getInput(new String[]{"Enter the index of Spell you want to use"});
                     int sIn=Integer.parseInt(spellIn);
 
@@ -206,9 +214,17 @@ public class HMChosenHero implements Cloneable {
                     System.out.println("Enter the portion you want to use");
                     System.out.println("Portions:");
                     System.out.printf(
-                            "%-6s %-22s %-12s %-12s%n",
+                            "%-6s %-22s %-12s %-30s%n",
                             "Index", "Name", "Attribute Increase", "Attribute Affected"
                     );
+                    int k=1;
+                    for(Portion p:potions){
+                        System.out.printf("%-6s %-22s %-12s %-12s%n",
+                                k++,
+                                p.portionName,
+                                p.attributeIncrease,
+                                p.attributeAffected);
+                    }
                     String portionIn = printer.getInput(new String[]{"Enter the index of portion you want to use"});
                     int pIn = Integer.parseInt(portionIn);
                     Portion pUsed = potions.get(pIn - 1);
@@ -244,6 +260,8 @@ public class HMChosenHero implements Cloneable {
                             break;
                         }
                     }
+                    System.out.println("Hero "+name+" just used portion "+potions.get(pIn-1).portionName+"increasing attributes "+potions.get(pIn-1).attributeAffected+" by "+potions.get(pIn-1).attributeIncrease);
+                    potions.remove(pIn - 1);
                     battleMove.selfHeal = true;
                     break;
                 }

@@ -199,7 +199,7 @@ public class MarketSpaceDealing {
                 }
                 Weapon selected=weaponsAll.get(p-1);
                 if(Integer.parseInt(selected.level)>hero.level){
-                    System.out.println("You hero does not have thwe required level to buy this weapon");
+                    System.out.println("You hero does not have the required level to buy this weapon");
                     return;
                 }
                 if(Integer.parseInt(selected.getCost())>hero.money){
@@ -210,6 +210,7 @@ public class MarketSpaceDealing {
                     hero.weapons.add(selected);
                     hero.money-=Integer.parseInt(selected.cost);
                     weaponsAll.remove(selected);
+                    System.out.println("Hero "+hero.name+" has just purchased weapon "+selected.name + "for cost "+selected.cost);
                     break;
                 }
 
@@ -288,7 +289,7 @@ public class MarketSpaceDealing {
                 "%-6s %-22s %-8s %-10s %-10s %-12s%n",
                 "Index", "Name", "Cost", "Required Level", "Attribute Increase", "Atrributes Affected"
         );
-        String[] portionIn={"Please Enter the index of the Portion you want to purchase"};
+        String[] portionIn={"Please Enter the index of the Portion you want to purchase","Enter 0 to go back"};
         int k = 1;
         for (Portion p : portionAll) {
             List<String> onePortion = p.getPortionDetails();
@@ -310,6 +311,9 @@ public class MarketSpaceDealing {
             }
             try{
                 int p=Integer.parseInt(in);
+                if(p==0){
+                    return;
+                }
                 if(p<1 || p>portionAll.size()){
                     System.out.println("Please enter a valid Index ...");
                     continue;
@@ -346,7 +350,7 @@ public class MarketSpaceDealing {
                 "%-6s %-22s %-8s %-10s %-10s %-10s %-10s%n",
                 "Index", "Name", "Cost", "Required Level", "Damage", "Mana", "Type"
         );
-        String[] spellIn={"Please Enter the index of the Spell you want to purchase"};
+        String[] spellIn={"Please Enter the index of the Spell you want to purchase","Enter 0 to go back"};
 
         int k = 1;
         for (Spell s : spellsAll) {
@@ -370,6 +374,9 @@ public class MarketSpaceDealing {
             }
             try{
                 int p=Integer.parseInt(in);
+                if(p==0){
+                    return;
+                }
                 if(p<1 || p>spells.spells.size()){
                     System.out.println("Please enter a valid Index ...");
                     continue;
@@ -400,7 +407,7 @@ public class MarketSpaceDealing {
     }
 
     public void mktSell(HMMarketGameMove mktMove, HMChosenHero hero){
-        String[] sell={"Enter 1 to sell Weapons","Enter 2 to sell Armors","Enter 3 to sell Spells","Enter 4 to sell Portions","Enter N/n to exit the market"};
+        String[] sell={"Enter 1 to sell Weapons","Enter 2 to sell Armors","Enter 3 to sell Spells","Enter 4 to sell Portions","Enter 0 to go back","Enter N/n to exit the market"};
         do{
             String inp=printer.getInput(sell);
             if(inp.equalsIgnoreCase("quit")){
@@ -413,6 +420,8 @@ public class MarketSpaceDealing {
             }
             int in=Integer.parseInt(inp);
             switch (in){
+                case 0:
+                    return;
                 case 1:
                     weaponSell(mktMove,  hero);
                     break;

@@ -155,12 +155,12 @@ public class HMBattle {
                 else{
                     battleMv=m.takeBattleTurn(battleMv);
                     if(chosenHero.otherHand!=null && chosenHero.otherHand instanceof Armory) {
-                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 50 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0));
-                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+((battleMv.hpDamage / 100.0) + 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0)));
+                        chosenHero.health -= ((battleMv.hpDamage / 10.0) - 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0));
+                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+((battleMv.hpDamage / 10.0) - 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0)));
                     }
                     else{
-                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 10);
-                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+ (((battleMv.hpDamage / 100.0) + 10)));
+                        chosenHero.health -= ((battleMv.hpDamage / 10.0) - 10);
+                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+ (((battleMv.hpDamage / 10.0) - 10)));
                     }
 
                     if(chosenHero.health<=0){
