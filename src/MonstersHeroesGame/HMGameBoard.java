@@ -12,6 +12,11 @@ public class HMGameBoard extends GameBoard {
         super(sizex, sizey);
     }
 
+    /*
+    Input: Number of market spaces and inaccessible spaces to be placed, hero initials to place in the starting block of player and player names list to associate the hero pieces placed
+    Outputs: N/A
+    Function: Function Set initial pieces on board
+     */
     public void setInitialPieces(int marketNum, int inaccNum, String[] heroInitials, List<String> playerNames){
         Random rand = new Random();
         // Place markets
@@ -54,6 +59,11 @@ public class HMGameBoard extends GameBoard {
 
     }
 
+    /*
+    Input: Tile to be placed, number of tiles of that type and Random class variable to generate random integers
+    Outputs: N/A
+    Function: Function to set the given pieces randomly on board
+     */
     public void placeRandomTiles(char tile, int count, Random rand) {
         int size = boardArray.length;
         while (count > 0) {
@@ -75,6 +85,11 @@ public class HMGameBoard extends GameBoard {
         }
     }
 
+    /*
+    Input: Random class variable to generate random integers
+    Outputs: N/A
+    Function: Function to fix inaccessible/blocked spaces (if any)
+     */
     public void fixInaccessibleRowsAndCols(Random rand) {
         int size = boardArray.length;
 
@@ -109,6 +124,11 @@ public class HMGameBoard extends GameBoard {
         }
     }
 
+    /*
+    Input: Row and column start location of player
+    Outputs: Boolean value on basis of whether player is trapped or not
+    Function: Function to fix inaccessible/blocked spaces (if any)
+     */
     private boolean isPlayerTrapped(int sr, int sc) {
         int[][] dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
         boolean[][] visited = new boolean[sizex][sizey];
@@ -160,7 +180,11 @@ public class HMGameBoard extends GameBoard {
         return false; // Player can reach all walkable tiles
     }
 
-
+    /*
+    Input: HMGameMove having information on player move
+    Outputs: Integer array with the current row and column of the player
+    Function: Function to find the location of player on the board GameMove state
+     */
     public int[] playerLoc(HMGameMove move){
         int[] loc=new int[2];
         for(int i=0;i<sizex;i++){
@@ -185,6 +209,11 @@ public class HMGameBoard extends GameBoard {
         return loc;
     }
 
+    /*
+    Input: HMGameMove having information on player move
+    Outputs: Integer array with the current row and column of the player
+    Function: Function to find the location of player on player name
+     */
     public int[] playerLoc(String playerName){
         int[] loc=new int[2];
         for(int i=0;i<sizex;i++){
@@ -203,19 +232,20 @@ public class HMGameBoard extends GameBoard {
         return loc;
     }
 
-    public List<String> getPlayersOnSameTile(String name){
-        int[] loc=playerLoc(name);
-        List<String> pNames=new ArrayList<>();
-        for (GamePiece p:boardArray[loc[0]][loc[1]].getPieces()){
-            pNames.add(p.getOwner());
-        }
-        return pNames;
-    }
-
+    /*
+    Input: HMGameMove having information on player move
+    Outputs: boolean value conveying whether the move was successfully made
+    Function: Function to make move on board
+     */
     public boolean makeMove(HMGameMove move) {
         return applyMove(move);
     }
 
+    /*
+    Input: HMGameMove having information on player move
+    Outputs: boolean value conveying whether the move was successfully applied
+    Function: Function to apply the move on board
+     */
     public boolean applyMove(HMGameMove move) {
         int[] locArr = playerLoc(move);
         System.out.println(Arrays.toString(locArr));

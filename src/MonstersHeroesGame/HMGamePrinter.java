@@ -1,5 +1,6 @@
 package MonstersHeroesGame;
 
+import MonstersHeroesGame.Data.MainData.Monsters;
 import Parent.GamePiece;
 import Parent.GamePrinter;
 import Parent.GameSpace;
@@ -8,12 +9,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HMGamePrinter extends GamePrinter {
+//    Printer class to print specific board information for Legends game
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
 
-
+    /*
+    Input: GameSpace[][] board
+    Outputs: N/A
+    Function: Print the board
+     */
     public void printBoard(GameSpace[][] board) {
         for (int row = 0; row < board.length; row++) {
             System.out.print(ANSI_RESET + "+");

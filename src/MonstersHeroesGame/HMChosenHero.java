@@ -374,7 +374,7 @@ public class HMChosenHero implements Cloneable {
     }
 
     /*
-    Input: GameMove storing informarion on the move when hero consumes a portion outside the battle
+    Input: GameMove storing information on the move when hero consumes a portion outside the battle
     Outputs: N/A
     Function: Function to enable hero to take portion outside the battle
      */

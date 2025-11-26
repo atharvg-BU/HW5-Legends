@@ -424,13 +424,13 @@ public class MarketSpaceDealing {
         }
         System.out.println("List of your Weapons:");
         System.out.printf(
-                "%-6s %-22s %-8s %-10s %-10s %-10s %-10s%n",
+                "%-6s %-22s %-10s %-10s %-10s %-10s%n",
                 "Index", "Name", "Selling Price", "Level", "Damage","Required Hands"
         );
         int k=0;
         for(Weapon w: hero.weapons){
             System.out.printf(
-                    "%-6s %-22s %-8s %-10s %-10s %-10s %-10s%n",
+                    "%-6s %-22s %-10s %-10s %-10s %-10s%n",
                     k++,
                     w.name,
                     (Integer.parseInt(w.cost)/2),
@@ -477,17 +477,18 @@ public class MarketSpaceDealing {
         String[] spellId={"Enter the ID of the Spell you want to sell"};
         if(hero.spells.size()==0){
             System.out.println("You do not have any spells!");
+            return;
         }
         else{
             System.out.println("List of your Spells:");
             System.out.printf(
-                    "%-6s %-22s %-8s %-10s %-10s%n",
+                    "%-6s %-22s %-10s %-8s %-10s%n",
                     "Index", "Name", "Selling Price", "Level", "Damage"
             );
             int k=0;
             for(Spell s: hero.spells){
                 System.out.printf(
-                        "%-6s %-22s %-8s %-10s %-10s%n",
+                        "%-6s %-22s %-10s %-8s %-10s%n",
                         k++,
                         s.name,
                         (Integer.parseInt(s.cost)/2),
@@ -534,13 +535,13 @@ public class MarketSpaceDealing {
         else{
             System.out.println("List of your Armors:");
             System.out.printf(
-                    "%-6s %-22s %-8s %-10s %-10s%n",
+                    "%-6s %-22s %-10s %-8s %-10s%n",
                     "Index", "Name", "Selling Price", "Level", "Damage Reduction"
             );
             int k=0;
             for(Armory a:hero.armor){
                 System.out.printf(
-                        "%-6s %-22s %-8s %-10s %-10s%n",
+                        "%-6s %-22s %-10s %-8s %-10s%n",
                         k++,
                         a.name,
                         (Integer.parseInt(a.cost)/2),
@@ -586,18 +587,31 @@ public class MarketSpaceDealing {
         else{
             System.out.println("List of your Portions:");
             System.out.printf(
-                    "%-6s %-22s %-8s %-10s %-10s%n",
-                    "Index", "Name", "Selling Price", "Level", "Attributes Affected"
+                    "%-6s %-22s %-12s %-12s%n",
+                    "Index", "Name", "Selling Price","Units"
             );
-            int k=0;
-            for(Portion p:hero.potions){
-                System.out.printf(
-                        "%-6s %-22s %-8s %-10s %-10s%n",
+            int k=1;
+            for(int i=0;i<hero.potions.size();i++){
+                int units=0;
+                boolean rep=false;
+                for(int j=0;j<hero.potions.size();j++){
+                    if(hero.potions.get(i).portionName.equals(hero.potions.get(j).portionName)){
+                        if(j<i){
+                            rep=true;
+                            break;
+                        }
+                        units++;
+                    }
+
+                }
+                if(rep){
+                    continue;
+                }
+                System.out.printf("%-6s %-22s %-12s %-12s%n",
                         k++,
-                        p.portionName,
-                        (Integer.parseInt(p.portionCost)/2),
-                        p.portionLevel,
-                        p.attributeAffected
+                        hero.potions.get(i).portionName,
+                        Integer.parseInt(hero.potions.get(i).portionCost)/2,
+                        units
                 );
             }
 
@@ -620,7 +634,6 @@ public class MarketSpaceDealing {
                     Portion p=hero.potions.get(in-1);
                     hero.money+=Integer.parseInt(p.portionCost)/2;
                     hero.potions.remove(p);
-                    portionAll.add(p);
                     break;
                 }
                 catch (Exception e){

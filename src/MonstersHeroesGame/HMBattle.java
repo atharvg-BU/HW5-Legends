@@ -80,47 +80,47 @@ public class HMBattle {
                             m.defeated
                     );
                 }
-                String inp=printer.getInput(monsterAttack);
-                if(inp.equalsIgnoreCase("q")){
-                    quit=true;
-                    return;
-                }
+                do {
+                    String inp = printer.getInput(monsterAttack);
+                    if (inp.equalsIgnoreCase("q")) {
+                        quit = true;
+                        return;
+                    }
 
-                try {
-                    int in=Integer.parseInt(inp);
-                    if(in<1 || in>monsters.size()){
-                        System.out.println("Please enter a Valid Input");
-                        continue;
-                    }
-                    if(monsters.get(in-1).defeated){
-                        System.out.println("Monster "+monsters.get(in-1)+" is already defeated...");
-                        continue;
-                    }
-                    HMBattleMove battleMv=new HMBattleMove();
-                    battleMv.opponent=monsters.get(in-1).name;
-                    System.out.println(battleMv.opponent);
-                    battleMv=h.takeBattleTurn(battleMv);
-                    if(!battleMv.selfHeal && !dodge(monsters.get(in-1).dodgeChance/100.0)){
-                        monsters.get(in-1).hp-= (battleMv.hpDamage-(monsters.get(in-1).defense/100.0));
-                        System.out.println("Hero "+h.name+" attacked monster resulting in damage of "+ (battleMv.hpDamage-(monsters.get(in-1).defense/100.0)));
-                        if(monsters.get(in-1).hp<0){
-                            System.out.println("Hero "+h.name+" has defeated monster "+monsters.get(in-1).name);
-                            monsters.get(in-1).hp=0;
-                            monsters.get(in-1).defeated=true;
+                    try {
+                        int in = Integer.parseInt(inp);
+                        if (in < 1 || in > monsters.size()) {
+                            System.out.println("Please enter a Valid Input");
+                            continue;
                         }
-                    }
-                    else{
-                        if(battleMv.selfHeal){
-                            System.out.println("You have self healed");
+                        if (monsters.get(in - 1).defeated) {
+                            System.out.println("Monster " + monsters.get(in - 1) + " is already defeated...");
+                            continue;
                         }
-                        else{
-                            System.out.println("Monster "+battleMv.opponent+"  has dodged your attack...");
+                        HMBattleMove battleMv = new HMBattleMove();
+                        battleMv.opponent = monsters.get(in - 1).name;
+                        System.out.println(battleMv.opponent);
+                        battleMv = h.takeBattleTurn(battleMv);
+                        if (!battleMv.selfHeal && !dodge(monsters.get(in - 1).dodgeChance / 100.0)) {
+                            monsters.get(in - 1).hp -= (battleMv.hpDamage - (monsters.get(in - 1).defense / 100.0));
+                            System.out.println("Hero " + h.name + " attacked monster resulting in damage of " + (battleMv.hpDamage - (monsters.get(in - 1).defense / 100.0)));
+                            if (monsters.get(in - 1).hp < 0) {
+                                System.out.println("Hero " + h.name + " has defeated monster " + monsters.get(in - 1).name);
+                                monsters.get(in - 1).hp = 0;
+                                monsters.get(in - 1).defeated = true;
+                            }
+                        } else {
+                            if (battleMv.selfHeal) {
+                                System.out.println("You have self healed");
+                            } else {
+                                System.out.println("Monster " + battleMv.opponent + "  has dodged your attack...");
+                            }
                         }
+                        break;
+                    } catch (Exception e) {
+                        printer.displayMsgs(invalid);
                     }
-                }
-                catch (Exception e){
-                    printer.displayMsgs(invalid);
-                }
+                }while (true);
                 boolean flag=false;
                 for(MonsterSpawn m:monsters){
                     if(!m.defeated){

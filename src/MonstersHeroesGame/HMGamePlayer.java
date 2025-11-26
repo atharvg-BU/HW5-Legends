@@ -22,7 +22,11 @@ public class HMGamePlayer extends GameUser {
         printer=new HMGamePrinter();
         chosenHeroes.get(0).weapons.add(initialWeapon);
     }
-
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Function to enable hero to take their turn by either moving their player/consuming portion or seeing their stats
+     */
     public GameMove takeTurn() {
         HMGameMove move=new HMGameMove();
         move.playerN=getUsername();
@@ -75,7 +79,11 @@ public class HMGamePlayer extends GameUser {
         }while(true);
         return move;
     }
-
+    /*
+    Input: GameMove object storing the information on a players move
+    Outputs: N/A
+    Function: Function to enable hero to consume portion
+     */
     public void portionConsume(HMGameMove move){
         String[] heroCh={"Enter the hero you to consume Portion","Enter 0 to go back"};
         displayStats();
@@ -103,17 +111,22 @@ public class HMGamePlayer extends GameUser {
         }while (true);
     }
 
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Display stats of all heroes in the players party
+     */
     public void displayStats(){
         System.out.println("Stats of All your Heroes");
         System.out.printf(
-                "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s %-10s%n",
                 "Index", "Hero", "Health", "Mana", "Strength", "Agility", "Dexterity",
-                "Starting Money", "Starting Experience", "Type"
+                "Starting Money", "Starting Experience", "Level", "Type"
         );
         int k=1;
         for(HMChosenHero h:chosenHeroes){
             System.out.printf(
-                    "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                    "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s %-10s%n",
                     k++,
                     h.name,
                     h.health,
@@ -123,12 +136,18 @@ public class HMGamePlayer extends GameUser {
                     h.dexterity,
                     h.money,
                     h.experience,
+                    h.level,
                     h.heroType
 
             );
         }
     }
 
+    /*
+    Input: N/A
+    Outputs: maxHeroLevel (max level of hero in part)
+    Function: Display stats of all heroes in the players party
+     */
     public int getMaxHeroLevel(){
         int maxHeroLevel=0;
         for(int i=0;i<chosenHeroes.size();i++){
@@ -139,6 +158,11 @@ public class HMGamePlayer extends GameUser {
         return maxHeroLevel;
     }
 
+    /*
+    Input: MarketSpaceDealing marketSpaceDealing
+    Outputs:
+    Function: Display stats of all heroes in the players party
+     */
     public boolean mktMove(MarketSpaceDealing marketSpaceDealing){
         String[] st=new  String[chosenHeroes.size()+1];
         for (int i = 0; i < chosenHeroes.size(); i++) {
@@ -178,9 +202,11 @@ public class HMGamePlayer extends GameUser {
         return true;
     }
 
-//    public HMBattleMove takeBattleTurn(List<MonsterSpawn> monsters){
-//        return  new HMBattleMove();
-//    }
+    /*
+    Input: (List<MonsterSpawn> monsterSpawns
+    Outputs: boolean value on whether the post battle turn is completed or not
+    Function: Stats update after heroes win the battle against monsters
+     */
     public boolean wonBattleTurn(List<MonsterSpawn> monsterSpawns){
         for(HMChosenHero h:chosenHeroes){
             if(h.fainted){
@@ -229,10 +255,20 @@ public class HMGamePlayer extends GameUser {
         return  false;
     }
 
+    /*
+    Input: N/A
+    Outputs: Number of monsters defeated
+    Function: Stats update after heroes win the battle against monsters
+     */
     public int getNumDefeatedMonsters(){
         return defeatedMonsters.size();
     }
 
+    /*
+    Input: Monsters m
+    Outputs: Boolean value telling if monster is defeated or not
+    Function: Tells whether a particular monster is defeated or not
+     */
     public boolean notDefeated(Monsters m){
         for(String s:defeatedMonsters){
             if(s.equals(m.getName())){
