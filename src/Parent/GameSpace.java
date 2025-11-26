@@ -33,9 +33,9 @@ public class GameSpace {
     }
 
     /*
-    inputs: n/a
-    outputs: list of pieces
-    function: gets a shallow copy of pieces member
+    Inputs: N/A
+    Outputs: list of pieces
+    Function: gets a shallow copy of pieces member
      */
     public List<GamePiece> getPieces() {
         return pieces;
@@ -43,7 +43,7 @@ public class GameSpace {
 
     /*
     inputs: pieces list
-    outputs: n/a
+    outputs: N/a
     function: sets input list to pieces member
      */
     public void setPieces(List<GamePiece> pieces) {
@@ -51,8 +51,8 @@ public class GameSpace {
     }
 
     /*
-    inputs: n/a
-    outputs: n/a
+    inputs: N/A
+    outputs: N/a
     function: clears pieces arr
      */
     public void clearSpace() {
@@ -60,7 +60,7 @@ public class GameSpace {
     }
 
     /*
-    inputs: n/a
+    inputs: N/A
     outputs: piece that was removed
     function: 'pops' piece off the list
      */
@@ -78,7 +78,7 @@ public class GameSpace {
 
 
     /*
-    inputs: n/a
+    inputs: N/A
     outputs: bool of if empty
     function: used to check for pieces
      */
