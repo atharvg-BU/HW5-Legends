@@ -154,6 +154,7 @@ public class HMChosenHero {
                         continue;
                     }
                     battleMove.hpDamage = (strength+Integer.parseInt(oneHand.damage))*0.05;
+
                     break;
                 }
                 if(in==2){

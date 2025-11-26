@@ -30,24 +30,39 @@ public class HMGameStarter extends Starter {
         marketSpaceDealing = new MarketSpaceDealing();
         winner = "";
     }
+
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Starts Legends: Heroes & Monsters Game with a welcome message and accepts the users and heroes
+     */
     public void startGame() {
 
         String[] welcomeMsg = {
-                "CAS CS 611, HW2 'Dots and Boxes' by Atharv & William \n",
-                "Rules: ...\n",
-                "\t1. The Goal of both players is to draw as many boxes as they can\n",
-                "\t2. Row and column naming is based on lines (either horizontal or vertical)\n",
-                "\t3. The player with the most number of boxes wins at the end\n",
-                "\t4. If you make a box, you get an additional turn.'\n",
-                "\t5. You can enter quit at any time to quit. Quitting by one player will result in other player winning. '\n"
+                "CAS CS 611, HW5 'Legends Game' by Atharv",
+                "Rules: ...",
+                "1. The game is played on a grid-based board containing marketplaces, inaccessible tiles, and common areas where battles may occur.",
+                "2. Players control a team of heroes, each with unique attributes like strength, agility, dexterity, mana, money, and experience.",
+                "3. Heroes can move up, down, left, or right but cannot enter inaccessible tiles. Entering a marketplace allows heroes to buy or sell items, spells, and equipment.",
+                "4. Battles occur randomly when heroes enter common areas and are turn-based, with heroes and monsters acting one after another.",
+                "5. Heroes can attack, cast spells, use items, or equip weapons/armor during their turn; monsters attack heroes during theirs.",
+                "6. Winning battles grants heroes experience and money, enabling them to level up and purchase better gear.",
+                "7. Heroes must equip weapons and armor for stat benefits; spells consume mana and may inflict extra or elemental damage.",
+                "8. A hero that is knocked out during battle revives afterward with partial health; the game ends if all heroes die.",
+                "9. The primary objective is to survive, increase hero power, and defeat monsters while exploring the board.",
+                "10. Enter Q at anytime to quit the game. This will result in monsters winning."
         };
         String[] playerInput={"Enter the number of players who want to play this game (1-3)"};
         String[] invalidInput={"Please Enter a Valid Number"};
         int nPlayers=1;
 
-
+        printer.displayMsgs(welcomeMsg);
         for(int i=0;i<nPlayers;i++){
             addUsers(i);
+        }
+
+        if(quit){
+            return;
         }
 
         initBoard();
@@ -66,6 +81,9 @@ public class HMGameStarter extends Starter {
     }
 
     public void playGame() {
+        if(quit){
+            return;
+        }
         System.out.println("Playing game");
         String[] quitMsg = {"Quitting Game ...","Thanks for playing!"};
         String[] playerTurnMsg = {
@@ -198,6 +216,10 @@ public class HMGameStarter extends Starter {
         while(true) {
             try{
                 String inp=printer.getInput(numHeroes);
+                if(inp.equalsIgnoreCase("q")){
+                    quit=true;
+                    return;
+                }
                 if(inp.length()>1){
                     printer.displayMsgs(invalid);
                     continue;
