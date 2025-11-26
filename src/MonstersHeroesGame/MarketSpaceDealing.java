@@ -210,7 +210,7 @@ public class MarketSpaceDealing {
                     hero.weapons.add(selected);
                     hero.money-=Integer.parseInt(selected.cost);
                     weaponsAll.remove(selected);
-                    System.out.println("Hero "+hero.name+" has just purchased weapon "+selected.name + "for cost "+selected.cost);
+                    System.out.println("Hero "+hero.name+" has just purchased weapon "+selected.name + "for "+selected.cost);
                     break;
                 }
 
@@ -272,6 +272,7 @@ public class MarketSpaceDealing {
                     hero.armor.add(selected);
                     armoryAll.remove(selected);
                     hero.money-=Integer.parseInt(selected.cost);
+                    System.out.println("Hero "+hero.name+" has just purchased armor "+selected.name + "for "+selected.cost);
                     break;
                 }
             }
@@ -396,6 +397,8 @@ public class MarketSpaceDealing {
                     hero.spells.add(selected);
                     spellsAll.remove(selected);
                     hero.money-=Integer.parseInt(selected.cost);
+                    System.out.println("Hero "+hero.name+" has just purchased a spell "+selected.name + "for "+selected.cost);
+
                     break;
                 }
 

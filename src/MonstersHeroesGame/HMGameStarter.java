@@ -154,6 +154,10 @@ public class HMGameStarter extends Starter {
 
                         HMBattle battle=new HMBattle(player.chosenHeroes,sp);
                         battle.battleStart();
+                        if(battle.quit){
+                            quit=true;
+                            return;
+                        }
                         winner=battle.battleWinner;
                         if(winner.equals("Monsters")){
                             break;
