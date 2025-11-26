@@ -64,6 +64,7 @@ public class HMGamePlayer extends GameUser {
                 if(inp.equalsIgnoreCase("p")){
                     move.direction="PortionConsume";
                     portionConsume(move);
+                    break;
                 }
                 printer.displayMsgs(invalidInputMsgs);
             }

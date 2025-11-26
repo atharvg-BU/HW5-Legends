@@ -87,10 +87,14 @@ public class HMGameStarter extends Starter {
                         System.out.println("Please Enter a valid move");
                         continue;
                     }
-                    if(move.direction.equalsIgnoreCase("i")){
+                    if(move.direction.equalsIgnoreCase("Stats")){
                         player.displayStats();
                         System.out.println("Hope you have seen your Hero stats!");
                         System.out.println("Now Please Proceed to take your move");
+                        continue;
+                    }
+                    if(move.direction.equalsIgnoreCase("PortionConsume")){
+                        System.out.println("Your Heroes are Stronger Now");
                         continue;
                     }
                     success=board.makeMove(move);

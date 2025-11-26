@@ -6,6 +6,7 @@ import MonstersHeroesGame.Data.StoreData.PortionSingleton;
 import MonstersHeroesGame.Data.StoreData.SpellsSingleton;
 import MonstersHeroesGame.Data.StoreData.WeaponsSingleton;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -96,7 +97,7 @@ public class MarketSpaceDealing {
     }
 
     public void mktBuy(HMMarketGameMove mktMove, HMChosenHero hero){
-        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Armors","Enter 3 to buy Spells","Enter 4 to buy Armor", "Enter 0 to go back","Enter N/n to go exit the market"};
+        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Armors","Enter 3 to buy Spells","Enter 4 to buy Portions","Enter 5 to see the money you have", "Enter 0 to go back","Enter N/n to go exit the market"};
         do {
             if(mktMove.leaveMkt){
                 return;
@@ -127,6 +128,8 @@ public class MarketSpaceDealing {
                     case 4:
                         buyPortion(mktMove,hero);
                         break;
+                    case 5:
+                        System.out.println("Money with "+hero.name+" is "+hero.money);
                     case 0:
                         return;
                     default:
@@ -259,7 +262,7 @@ public class MarketSpaceDealing {
             System.out.println("There are no Portions in the marketSpace! Your Heroes Own all the Portions");
         }
         System.out.printf(
-                "%-6d %-22s %-8s %-10s %-10s %-12s%n",
+                "%-6s %-22s %-8s %-10s %-10s %-12s%n",
                 "Index", "Name", "Cost", "Required Level", "Attribute Increase", "Atrributes Affected"
         );
         String[] portionIn={"Please Enter the index of the Portion you want to purchase"};
@@ -268,7 +271,7 @@ public class MarketSpaceDealing {
         for (Portion p : portionAll) {
             List<String> onePortion = p.getPortionDetails();
             System.out.printf(
-                    "%-6d %-22s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                    "%-6d %-22s %-8s %-10s %-10s %-12s%n",
                     k++,
                     onePortion.get(0),
                     onePortion.get(1),
@@ -299,6 +302,7 @@ public class MarketSpaceDealing {
                     hero.potions.add(selected);
                     portionAll.remove(selected);
                     hero.money-=Integer.parseInt(selected.portionCost);
+                    System.out.println("Hero "+hero.name+" has purchased "+selected.portionName+" for "+selected.portionCost);
                     break;
                 }
             }
