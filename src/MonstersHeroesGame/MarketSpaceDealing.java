@@ -105,14 +105,20 @@ public class MarketSpaceDealing {
                 System.out.println("Leaving the Market! Thank you for Shopping");
                 return;
             }
+            System.out.println("Invalid Input!");
         }while (true);
         if(mktMove.quit){
             return;
         }
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user buy an item from market
+     */
     public void mktBuy(HMMarketGameMove mktMove, HMChosenHero hero){
-        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Armors","Enter 3 to buy Spells","Enter 4 to buy Portions","Enter 5 to see the money you have", "Enter 0 to go back","Enter N/n to go exit the market"};
+        String[] buyMsg={"What can we Get you today?","Enter 1 to buy Weapons","Enter 2 to buy Armors","Enter 3 to buy Spells","Enter 4 to buy Portions","Enter 5 to see your stats", "Enter 0 to go back","Enter N/n to go exit the market"};
         do {
             if(mktMove.leaveMkt){
                 return;
@@ -144,7 +150,10 @@ public class MarketSpaceDealing {
                         buyPortion(mktMove,hero);
                         break;
                     case 5:
-                        System.out.println("Money with "+hero.name+" is "+hero.money);
+                        System.out.println("Hero Stats");
+                        System.out.println("Hero Name: "+hero.name);
+                        System.out.println("Hero Money: "+hero.money);
+                        System.out.println("Hero Level: "+hero.level);
                     case 0:
                         return;
                     default:
@@ -158,6 +167,11 @@ public class MarketSpaceDealing {
 
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user buy a weapon from market
+     */
     public void buyWeapon(HMMarketGameMove mktMove, HMChosenHero hero){
         if(weaponsAll.size()==0){
             System.out.println("There are no Weapons in this MarketSpace! Your Heroes Own all the Weapons");
@@ -221,6 +235,11 @@ public class MarketSpaceDealing {
         }while (true);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user buy an Armor from market
+     */
     public void buyArmor(HMMarketGameMove mktMove, HMChosenHero hero){
         if(armoryAll.size()==0){
             System.out.println("There are no Armors in this MarketSpace! Your Heroes Own all the Armors");
@@ -282,12 +301,17 @@ public class MarketSpaceDealing {
         }while (true);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user buy a Portion from market
+     */
     public void buyPortion(HMMarketGameMove mktMove, HMChosenHero hero){
         if(portionAll.size()==0){
             System.out.println("There are no Portions in the marketSpace! Your Heroes Own all the Portions");
         }
         System.out.printf(
-                "%-6s %-22s %-8s %-10s %-10s %-12s%n",
+                "%-6s %-22s %-8s %-22s %-10s %-22s%n",
                 "Index", "Name", "Cost", "Required Level", "Attribute Increase", "Atrributes Affected"
         );
         String[] portionIn={"Please Enter the index of the Portion you want to purchase","Enter 0 to go back"};
@@ -295,7 +319,7 @@ public class MarketSpaceDealing {
         for (Portion p : portionAll) {
             List<String> onePortion = p.getPortionDetails();
             System.out.printf(
-                    "%-6d %-22s %-8s %-10s %-10s %-12s%n",
+                    "%-6d %-22s %-8s %-22s %-10s %-22s%n",
                     k++,
                     onePortion.get(0),
                     onePortion.get(1),
@@ -343,12 +367,17 @@ public class MarketSpaceDealing {
         }while (true);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user buy a Spell from market
+     */
     public void buySpell(HMMarketGameMove mktMove, HMChosenHero hero){
         if(spellsAll.size()==0){
             System.out.println("There are no Spells in the marketSpace! Your Heroes Own all the Spell");
         }
         System.out.printf(
-                "%-6s %-22s %-8s %-10s %-10s %-10s %-10s%n",
+                "%-6s %-22s %-8s %-22s %-10s %-10s %-10s%n",
                 "Index", "Name", "Cost", "Required Level", "Damage", "Mana", "Type"
         );
         String[] spellIn={"Please Enter the index of the Spell you want to purchase","Enter 0 to go back"};
@@ -357,7 +386,7 @@ public class MarketSpaceDealing {
         for (Spell s : spellsAll) {
             List<String> oneSpell = s.getSpellDetails();
             System.out.printf(
-                    "%-6d %-22s %-8s %-10s %-10s %-10s %-10s%n",
+                    "%-6d %-22s %-8s %-22s %-10s %-10s %-10s%n",
                     k++,
                     oneSpell.get(0),
                     oneSpell.get(1),
@@ -378,11 +407,11 @@ public class MarketSpaceDealing {
                 if(p==0){
                     return;
                 }
-                if(p<1 || p>spells.spells.size()){
+                if(p<1 || p>spellsAll.size()){
                     System.out.println("Please enter a valid Index ...");
                     continue;
                 }
-                Spell selected=spells.spells.get(p-1);
+                Spell selected=spellsAll.get(p-1);
 
                 if(Integer.parseInt(selected.rqLevel)>hero.level){
                     System.out.println("You hero does not have the required level to buy this spell");
@@ -409,6 +438,11 @@ public class MarketSpaceDealing {
         }while (true);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user sell an item in market
+     */
     public void mktSell(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] sell={"Enter 1 to sell Weapons","Enter 2 to sell Armors","Enter 3 to sell Spells","Enter 4 to sell Portions","Enter 0 to go back","Enter N/n to exit the market"};
         do{
@@ -443,6 +477,11 @@ public class MarketSpaceDealing {
         }while(true);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user sell a weapon in market
+     */
     public void weaponSell(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] weaponInd={"Enter the index of the Weapons you want to sell"};
         if(hero.weapons.size()==0){
@@ -451,13 +490,13 @@ public class MarketSpaceDealing {
         }
         System.out.println("List of your Weapons:");
         System.out.printf(
-                "%-6s %-22s %-10s %-10s %-10s %-10s%n",
+                "%-6s %-22s %-22s %-10s %-10s %-10s%n",
                 "Index", "Name", "Selling Price", "Level", "Damage","Required Hands"
         );
         int k=0;
         for(Weapon w: hero.weapons){
             System.out.printf(
-                    "%-6s %-22s %-10s %-10s %-10s %-10s%n",
+                    "%-6s %-22s %-22s %-10s %-10s %-10s%n",
                     k++,
                     w.name,
                     (Integer.parseInt(w.cost)/2),
@@ -500,6 +539,11 @@ public class MarketSpaceDealing {
 
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user sell a Spell in market
+     */
     public void spellSell(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] spellId={"Enter the ID of the Spell you want to sell"};
         if(hero.spells.size()==0){
@@ -509,13 +553,13 @@ public class MarketSpaceDealing {
         else{
             System.out.println("List of your Spells:");
             System.out.printf(
-                    "%-6s %-22s %-10s %-8s %-10s%n",
+                    "%-6s %-22s %-22s %-8s %-10s%n",
                     "Index", "Name", "Selling Price", "Level", "Damage"
             );
             int k=0;
             for(Spell s: hero.spells){
                 System.out.printf(
-                        "%-6s %-22s %-10s %-8s %-10s%n",
+                        "%-6s %-22s %-22s %-8s %-10s%n",
                         k++,
                         s.name,
                         (Integer.parseInt(s.cost)/2),
@@ -554,6 +598,12 @@ public class MarketSpaceDealing {
         }
 
     }
+
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user sell an Armor in market
+     */
     public void armorSell(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] armorId={"Enter the ID of the Spell you want to sell"};
         if(hero.spells.size()==0){
@@ -562,13 +612,13 @@ public class MarketSpaceDealing {
         else{
             System.out.println("List of your Armors:");
             System.out.printf(
-                    "%-6s %-22s %-10s %-8s %-10s%n",
+                    "%-6s %-22s %-22s %-8s %-10s%n",
                     "Index", "Name", "Selling Price", "Level", "Damage Reduction"
             );
             int k=0;
             for(Armory a:hero.armor){
                 System.out.printf(
-                        "%-6s %-22s %-10s %-8s %-10s%n",
+                        "%-6s %-22s %-22s %-8s %-10s%n",
                         k++,
                         a.name,
                         (Integer.parseInt(a.cost)/2),
@@ -606,6 +656,12 @@ public class MarketSpaceDealing {
             }while(true);
         }
     }
+
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Function to let user sell a Portion in market
+     */
     public void portionSell(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] portionId={"Enter the ID of the Portion you want to sell"};
         if(hero.potions.size()==0){
