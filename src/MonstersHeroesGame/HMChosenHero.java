@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HMChosenHero {
+public class HMChosenHero implements Cloneable {
     public String name;
     public double health;
     public int mana;
@@ -362,48 +362,98 @@ public class HMChosenHero {
         }
         System.out.println("Portions:");
         System.out.printf(
-                "%-6s %-22s %-12s %-12s%n",
+                "%-6s %-22s %-30s %-12s%n",
                 "Index", "Name", "Attribute Increase", "Attribute Affected"
         );
-        String portionIn = printer.getInput(new String[]{"Enter the index of portion you want to use"});
-        int pIn = Integer.parseInt(portionIn);
-        Portion pUsed = potions.get(pIn - 1);
-        String attributesAff = pUsed.attributeAffected.trim();
-        String[] attAff = attributesAff.split("/");
-        for (int i = 0; i < attAff.length; i++) {
-            attAff[i] = attAff[i].trim();
-            if (attAff[i].equals("Health")) {
-                if(health + Integer.parseInt(pUsed.attributeIncrease)>level*100){
-                    health=level*100;
+        int k=1;
+        for(Portion w : potions){
+            System.out.printf("%-6s %-22s %-30s %-12s%n",
+                    k++,
+                    w.portionName,
+                    w.attributeIncrease,
+                    w.attributeAffected
+                    );
+        }
+        do {
+            String portionIn = printer.getInput(new String[]{"Enter the index of portion you want to use"});
+            try {
+                int pIn = Integer.parseInt(portionIn);
+
+                if (pIn < 0 || pIn > potions.size()) {
+                    System.out.println("Invalid index");
+                    continue;
                 }
-                else {
-                    health += Integer.parseInt(pUsed.attributeIncrease);
+                Portion pUsed = potions.get(pIn - 1);
+                String attributesAff = pUsed.attributeAffected.trim();
+                String[] attAff = attributesAff.split("/");
+                for (int i = 0; i < attAff.length; i++) {
+                    attAff[i] = attAff[i].trim();
+                    if (attAff[i].equals("Health")) {
+                        if (health + Integer.parseInt(pUsed.attributeIncrease) > level * 100) {
+                            health = level * 100;
+                        } else {
+                            health += Integer.parseInt(pUsed.attributeIncrease);
+                        }
+                    }
+                    if (attAff[i].equals("Mana")) {
+                        mana += Integer.parseInt(pUsed.attributeIncrease);
+                    }
+                    if (attAff[i].equals("Strength")) {
+                        strength += Integer.parseInt(pUsed.attributeIncrease);
+                    }
+                    if (attAff[i].equals("Dexterity")) {
+                        dexterity += Integer.parseInt(pUsed.attributeIncrease);
+                    }
+                    if (attAff[i].equals("Agility")) {
+                        agility += Integer.parseInt(pUsed.attributeIncrease);
+                    }
+                    if (attAff[i].equals("defense")) {
+                        defense += Integer.parseInt(pUsed.attributeIncrease);
+                    }
+                    if (attAff[i].equals("All")) {
+                        health += Integer.parseInt(pUsed.attributeIncrease);
+                        mana += Integer.parseInt(pUsed.attributeIncrease);
+                        strength += Integer.parseInt(pUsed.attributeIncrease);
+                        agility += Integer.parseInt(pUsed.attributeIncrease);
+                        defense += Integer.parseInt(pUsed.attributeIncrease);
+                        dexterity += Integer.parseInt(pUsed.attributeIncrease);
+                        break;
+                    }
                 }
-            }
-            if (attAff[i].equals("Mana")) {
-                mana += Integer.parseInt(pUsed.attributeIncrease);
-            }
-            if (attAff[i].equals("Strength")) {
-                strength += Integer.parseInt(pUsed.attributeIncrease);
-            }
-            if (attAff[i].equals("Dexterity")) {
-                dexterity += Integer.parseInt(pUsed.attributeIncrease);
-            }
-            if (attAff[i].equals("Agility")) {
-                agility += Integer.parseInt(pUsed.attributeIncrease);
-            }
-            if (attAff[i].equals("defense")) {
-                defense += Integer.parseInt(pUsed.attributeIncrease);
-            }
-            if (attAff[i].equals("All")) {
-                health += Integer.parseInt(pUsed.attributeIncrease);
-                mana += Integer.parseInt(pUsed.attributeIncrease);
-                strength += Integer.parseInt(pUsed.attributeIncrease);
-                agility += Integer.parseInt(pUsed.attributeIncrease);
-                defense += Integer.parseInt(pUsed.attributeIncrease);
-                dexterity += Integer.parseInt(pUsed.attributeIncrease);
                 break;
             }
+            catch (Exception e) {
+                System.out.println("Invalid input!");
+            }
+        }while (true);
+    }
+
+    public HMChosenHero clone() {
+        try {
+            return (HMChosenHero) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    public void setValues(Heroes ref,String name, int mana, int strength, int agility, int dexterity, int money, int experience, String heroType){
+        this.heroType = heroType;
+        this.name = name;
+        this.strength = strength;
+        this.level=experience/3;
+        this.health = level*100;
+        this.mana = mana;
+        this.agility = agility;
+        this.dexterity = dexterity;
+        this.money = money;
+        this.experience = experience;
+        this.fainted = false;
+        this.defense=0;
+        weapons = new ArrayList<>();
+        armor = new ArrayList<>();
+        spells = new ArrayList<>();
+        potions = new ArrayList<>();
+        printer = new HMGamePrinter();
+        refHero = ref;
     }
 }

@@ -2,7 +2,7 @@ package MonstersHeroesGame;
 
 import java.util.List;
 
-public class MonsterSpawn {
+public class MonsterSpawn implements Cloneable {
     public String name;
     public int level;
     public int damage;
@@ -40,5 +40,14 @@ public class MonsterSpawn {
     public HMBattleMove takeBattleTurn(HMBattleMove battleMove){
         battleMove.hpDamage=damage;
         return battleMove;
+    }
+
+    @Override
+    public MonsterSpawn clone() {
+        try {
+            return (MonsterSpawn) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

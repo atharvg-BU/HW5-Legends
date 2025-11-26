@@ -7,6 +7,7 @@ import java.sql.SQLOutput;
 import java.util.*;
 
 public class HMBattle {
+//    Class to handle the battle in a common space between heroes and monsters
     List<HMChosenHero> heroes;
     List<MonsterSpawn> monsters;
     HMGamePrinter printer;

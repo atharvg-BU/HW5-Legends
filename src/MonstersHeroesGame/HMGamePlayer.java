@@ -93,25 +93,30 @@ public class HMGamePlayer extends GameUser {
                 }
                 HMChosenHero chosenHero=chosenHeroes.get(in-1);
                 chosenHero.consumePortion(move);
-
+                System.out.println("Updated Stats:");
+                displayStats();
+                break;
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                System.out.println("Invalid input!");
+            }
         }while (true);
     }
 
     public void displayStats(){
         System.out.println("Stats of All your Heroes");
         System.out.printf(
-                "%-6s %-22s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
-                "Index", "Hero", "Mana", "Strength", "Agility", "Dexterity",
+                "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                "Index", "Hero", "Health", "Mana", "Strength", "Agility", "Dexterity",
                 "Starting Money", "Starting Experience", "Type"
         );
         int k=1;
         for(HMChosenHero h:chosenHeroes){
             System.out.printf(
-                    "%-6s %-22s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
+                    "%-6s %-22s %-8s %-8s %-10s %-10s %-12s %-18s %-22s %-10s%n",
                     k++,
                     h.name,
+                    h.health,
                     h.mana,
                     h.strength,
                     h.agility,

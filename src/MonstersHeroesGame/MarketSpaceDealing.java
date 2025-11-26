@@ -183,6 +183,10 @@ public class MarketSpaceDealing {
                     continue;
                 }
                 Weapon selected=weaponsAll.get(p-1);
+                if(Integer.parseInt(selected.level)>hero.level){
+                    System.out.println("You hero does not have thwe required level to buy this weapon");
+                    return;
+                }
                 if(Integer.parseInt(selected.getCost())>hero.money){
                     System.out.println("You don't have enough money to do that");
                     break;
@@ -240,6 +244,10 @@ public class MarketSpaceDealing {
                     continue;
                 }
                 Armory selected=armoryAll.get(p-1);
+                if(Integer.parseInt(selected.rqLevel)>hero.level){
+                    System.out.println("You hero does not have the required level to buy this armor");
+                    return;
+                }
                 if(Integer.parseInt(selected.cost)>hero.money){
                     System.out.println("You don't have enough money to do that");
                     continue;
@@ -266,7 +274,6 @@ public class MarketSpaceDealing {
                 "Index", "Name", "Cost", "Required Level", "Attribute Increase", "Atrributes Affected"
         );
         String[] portionIn={"Please Enter the index of the Portion you want to purchase"};
-
         int k = 1;
         for (Portion p : portionAll) {
             List<String> onePortion = p.getPortionDetails();
@@ -293,6 +300,11 @@ public class MarketSpaceDealing {
                     continue;
                 }
                 Portion selected=portionAll.get(p-1);
+
+                if(Integer.parseInt(selected.portionLevel)>hero.level){
+                    System.out.println("You hero does not have the required level to buy this portion");
+                    return;
+                }
 
                 if(Integer.parseInt(selected.portionCost)>hero.money){
                         System.out.println("You don't have enough money to do that");
@@ -349,6 +361,12 @@ public class MarketSpaceDealing {
                     continue;
                 }
                 Spell selected=spells.spells.get(p-1);
+
+                if(Integer.parseInt(selected.rqLevel)>hero.level){
+                    System.out.println("You hero does not have the required level to buy this spell");
+                    return;
+                }
+
                 if(Integer.parseInt(selected.cost)>hero.money){
                     System.out.println("You don't have enough money to do that");
                     break;

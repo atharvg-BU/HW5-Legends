@@ -291,18 +291,36 @@ public class HMGameStarter extends Starter {
                     if(flag){
                         continue;
                     }
-                    HMChosenHero chosenHero = new HMChosenHero(
-                            heroInstance.heroes.get(in-1),
-                            chHero.get(0),
-                            Integer.parseInt(chHero.get(1)),
-                            Integer.parseInt(chHero.get(2)),
-                            Integer.parseInt(chHero.get(3)),
-                            Integer.parseInt(chHero.get(4)),
-                            Integer.parseInt(chHero.get(5)),
-                            Integer.parseInt(chHero.get(6)),
-                            chHero.get(7)
-                    );
-                    chosenHeroes.add(chosenHero);
+                    HMChosenHero chosenHero;
+                    if(chosenHeroes.size()>0){
+                        chosenHero=chosenHeroes.get(0).clone();
+                        chosenHero.setValues(heroInstance.heroes.get(in-1),
+                                chHero.get(0),
+                                Integer.parseInt(chHero.get(1)),
+                                Integer.parseInt(chHero.get(2)),
+                                Integer.parseInt(chHero.get(3)),
+                                Integer.parseInt(chHero.get(4)),
+                                Integer.parseInt(chHero.get(5)),
+                                Integer.parseInt(chHero.get(6)),
+                                chHero.get(7)
+                        );
+                        chosenHeroes.add(chosenHero);
+                    }
+                    else {
+                        chosenHero = new HMChosenHero(
+                                heroInstance.heroes.get(in - 1),
+                                chHero.get(0),
+                                Integer.parseInt(chHero.get(1)),
+                                Integer.parseInt(chHero.get(2)),
+                                Integer.parseInt(chHero.get(3)),
+                                Integer.parseInt(chHero.get(4)),
+                                Integer.parseInt(chHero.get(5)),
+                                Integer.parseInt(chHero.get(6)),
+                                chHero.get(7)
+                        );
+                        chosenHeroes.add(chosenHero);
+                    }
+
                     System.out.println("Your Hero "+(i+1)+" is: "+chosenHero.name);
                     break;
                 } catch (Exception e) {
