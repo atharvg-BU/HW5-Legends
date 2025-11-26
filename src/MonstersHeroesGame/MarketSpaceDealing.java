@@ -35,6 +35,11 @@ public class MarketSpaceDealing {
 
     }
 
+    /*
+    Input: N/A
+    Outputs: N/A
+    Function: Initialize the market
+     */
     public void mktInitialize(){
         for(Armory a : armory.armoryAll){
             this.armoryAll.add(a);
@@ -54,10 +59,20 @@ public class MarketSpaceDealing {
 
     }
 
+    /*
+    Input: N/A
+    Outputs: Weapon
+    Function: Gives the weapon to be assigned to the first hero initially
+     */
     public Weapon getInitialWeapon(){
         return weapons.weapons.get(0);
     }
 
+    /*
+    Input: HMMarketGameMove mktMove, HMChosenHero hero
+    Outputs: N/A
+    Function: Enter the market and asking wha hero want to buy/sell
+     */
     public void mktEnter(HMMarketGameMove mktMove, HMChosenHero hero){
         String[] buySellMsgs={"Welcome to the Market!","Here you can Buy/Sell Items","Enter B/b to Buy an Item","Enter S/s to Sell an Item","Enter N/n to Exit MarketSpace","Enter 0 to go back"};
         do {

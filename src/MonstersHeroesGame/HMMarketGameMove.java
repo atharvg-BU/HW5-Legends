@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HMMarketGameMove extends GameMove {
+//    Class to store information on the market move of a player
     public List<Weapon> boughtWeapons;
     public List<Portion> boughtPortions;
     public List<Spell> boughtSpells;
