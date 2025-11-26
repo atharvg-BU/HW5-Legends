@@ -137,7 +137,7 @@ public class HMGamePlayer extends GameUser {
     public boolean mktMove(MarketSpaceDealing marketSpaceDealing){
         String[] st=new  String[chosenHeroes.size()+1];
         for (int i = 0; i < chosenHeroes.size(); i++) {
-            st[i]=("Enter " + i + " if you wish to enter the market with Hero " + chosenHeroes.get(i).name);
+            st[i]=("Enter " + (i+1) + " if you wish to enter the market with Hero " + chosenHeroes.get(i).name);
         }
         st[st.length-1]="Enter N/n to exit the Market";
         do {
@@ -156,7 +156,7 @@ public class HMGamePlayer extends GameUser {
                     continue;
                 }
                 HMMarketGameMove move=new HMMarketGameMove();
-                marketSpaceDealing.mktEnter(move,chosenHeroes.get(in));
+                marketSpaceDealing.mktEnter(move,chosenHeroes.get(in-1));
                 if(move.leaveMkt){
                     break;
                 }
@@ -165,7 +165,6 @@ public class HMGamePlayer extends GameUser {
                 }
             }
             catch(Exception e){
-                System.out.println(e.getMessage());
                 System.out.println("Please enter a valid input...");
                 continue;
             }

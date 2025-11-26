@@ -106,7 +106,6 @@ public class HMGameStarter extends Starter {
                         continue;
                     }
                     if(move.direction.equalsIgnoreCase("Stats")){
-                        player.displayStats();
                         System.out.println("Hope you have seen your Hero stats!");
                         System.out.println("Now Please Proceed to take your move");
                         continue;
@@ -175,6 +174,7 @@ public class HMGameStarter extends Starter {
         if(quit){
             System.out.println("Since you have quit the game, the Monsters Win");
             System.out.println("Quitting Game ...");
+            return;
         }
         if(winner.equals("Monsters")){
             System.out.println("All Your Heroes Have Been Defeated! Monsters Win!");
@@ -269,8 +269,13 @@ public class HMGameStarter extends Starter {
             int in;
             while (true) {
                 try {
-                    in = Integer.parseInt(printer.getInput(characterInp));
-                    if (in < 1 || in >= k) {
+                    String inp=printer.getInput(characterInp);
+                    if(inp.equalsIgnoreCase("q")){
+                        quit=true;
+                        return;
+                    }
+                    in = Integer.parseInt(inp);
+                    if (in < 1 || in > k) {
                         printer.displayMsgs(invalid);
                         continue;
                     }

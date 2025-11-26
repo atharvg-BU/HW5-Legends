@@ -91,7 +91,12 @@ public class HMBattle {
                     battleMv=h.takeBattleTurn(battleMv);
                     if(!battleMv.selfHeal && !dodge(monsters.get(in-1).dodgeChance/100.0)){
                         monsters.get(in-1).hp-= (battleMv.hpDamage-(monsters.get(in-1).defense/100.0));
-                        System.out.print("Hero "+h.name+" attacked monster resulting in damage of "+ (battleMv.hpDamage-(monsters.get(in-1).defense/100.0)));
+                        System.out.println("Hero "+h.name+" attacked monster resulting in damage of "+ (battleMv.hpDamage-(monsters.get(in-1).defense/100.0)));
+                        if(monsters.get(in-1).hp<0){
+                            System.out.println("Hero "+h.name+" has defeated monster "+monsters.get(in-1).name);
+                            monsters.get(in-1).hp=0;
+                            monsters.get(in-1).defeated=true;
+                        }
                     }
                     else{
                         if(battleMv.selfHeal){
@@ -118,8 +123,9 @@ public class HMBattle {
                     return ;
                 }
             }
-
+            System.out.println("Now its monsters Turn to Attack");
             for(MonsterSpawn m:monsters){
+                System.out.println(m.name+" is your turn!");
                 HMBattleMove battleMv=new HMBattleMove();
                 double minHp=heroes.get(0).health;
                 int minInd=0;
@@ -132,13 +138,18 @@ public class HMBattle {
                     }
                 }
                 battleMv.opponent=heroes.get(minInd).name;
-                if(dodge(chosenHero.agility*0.002)){
+                if(dodge(chosenHero.agility*0.0005)){
                     System.out.println("Hero "+chosenHero.name+ " dodged "+m.name+"'s attack");
                 }
                 else{
                     battleMv=m.takeBattleTurn(battleMv);
                     if(chosenHero.otherHand!=null && chosenHero.otherHand instanceof Armory) {
-                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0));
+                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 50 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0));
+                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+((battleMv.hpDamage / 100.0) + 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0)));
+                    }
+                    else{
+                        chosenHero.health -= ((battleMv.hpDamage / 100.0) + 10);
+                        System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+ (((battleMv.hpDamage / 100.0) + 10)));
                     }
 
                     if(chosenHero.health<=0){
@@ -165,7 +176,7 @@ public class HMBattle {
     }
     public boolean dodge(double dodgeChance){
         double r=Math.random();
-        if(r>=(dodgeChance)){
+        if(r<=(dodgeChance)){
             return true;
         }
         else{

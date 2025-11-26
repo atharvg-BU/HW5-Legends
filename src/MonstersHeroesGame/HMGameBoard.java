@@ -16,6 +16,7 @@ public class HMGameBoard extends GameBoard {
         Random rand = new Random();
         // Place markets
         do {
+            boardArray=new GameSpace[sizex][sizey];
             placeRandomTiles('$', marketNum, rand);
 
             // Place inaccessible spaces
@@ -37,7 +38,7 @@ public class HMGameBoard extends GameBoard {
                     }
 
                     boardArray[r][c] = obj;
-                    if(isPlayerTrapped(r,c,inaccNum)){
+                    if(isPlayerTrapped(r,c)){
                         System.out.println("Sorry Generated a bad board! Regenerating");
                         trapped=true;
                         break;
@@ -108,13 +109,14 @@ public class HMGameBoard extends GameBoard {
         }
     }
 
-    private boolean isPlayerTrapped(int sr, int sc,int inaccNum) {
+    private boolean isPlayerTrapped(int sr, int sc) {
         int[][] dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
         boolean[][] visited = new boolean[sizex][sizey];
         Queue<int[]> q = new LinkedList<>();
 
-        q.add(new int[]{sr, sc});
+        // BFS start from player position
         visited[sr][sc] = true;
+        q.add(new int[]{sr, sc});
 
         while (!q.isEmpty()) {
             int[] cur = q.poll();
@@ -123,10 +125,11 @@ public class HMGameBoard extends GameBoard {
                 int nr = cur[0] + d[0];
                 int nc = cur[1] + d[1];
 
+                // Out of bounds
                 if (nr < 0 || nc < 0 || nr >= sizex || nc >= sizey)
                     continue;
 
-                // Walkable = null or Market or another S
+                // Skip Immovable (X)
                 if (boardArray[nr][nc] != null &&
                         boardArray[nr][nc].getFirstPiece() instanceof ImmovableSpacePiece)
                     continue;
@@ -138,29 +141,23 @@ public class HMGameBoard extends GameBoard {
             }
         }
 
-        // If S has at least one walkable adjacent neighbor -> not trapped
-        for (int[] d : dirs) {
-            int nr = sr + d[0];
-            int nc = sc + d[1];
-            if (nr < 0 || nc < 0 || nr >= sizex || nc >= sizey) continue;
-            if (visited[nr][nc]) return false;
-        }
-        int c=0;
-        for(int i=0;i<visited.length;i++){
-            for(int j=0;j<visited[i].length;j++){
-                if(visited[i][j]){
-                    c++;
+        // Now verify: every non-X space is reachable
+        for (int i = 0; i < sizex; i++) {
+            for (int j = 0; j < sizey; j++) {
+
+                // Skip inaccessible tiles
+                if (boardArray[i][j] != null &&
+                        boardArray[i][j].getFirstPiece() instanceof ImmovableSpacePiece)
+                    continue;
+
+                // If it's a walkable tile (null, S, or $) and not visited → trapped
+                if (!visited[i][j]) {
+                    return true; // Player cannot reach this walkable tile
                 }
-            }
-            if(c==((sizex*sizey)-inaccNum)){
-                return false;
-            }
-            else {
-                return true;
             }
         }
 
-        return true;  // Hero is blocked by X
+        return false; // Player can reach all walkable tiles
     }
 
 
