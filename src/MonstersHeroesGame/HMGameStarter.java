@@ -115,10 +115,8 @@ public class HMGameStarter extends Starter {
                         continue;
                     }
                     success=board.makeMove(move);
-                    System.out.println(success);
                     marketArr= move.mktArr;
 
-                    System.out.println(move.mktArr);
 
 //                    success=true;
                 }while(!success);
@@ -128,10 +126,12 @@ public class HMGameStarter extends Starter {
                         if(inp.equalsIgnoreCase("m")){
                             System.out.println("Entering the market");
                             boolean mv = player.mktMove(marketSpaceDealing);
+                            continue;
                         }
                         if(inp.equalsIgnoreCase("n")){
                             break;
                         }
+                        System.out.println("Please Enter a valid Input");
                     }while (true);
                 }
                 else{
@@ -139,18 +139,23 @@ public class HMGameStarter extends Starter {
                     if(luck%2!=0){
                         System.out.println("Heroes Get ready for a battle");
                         List<Monsters> spawnedMonsters=spawnMonsters();
+                        for(Monsters monster:spawnedMonsters){
+                            System.out.println(monster.getName());
+                        }
                         List<MonsterSpawn>sp=new ArrayList<>();
                         Collections.shuffle(spawnedMonsters);
                         int max=spawnedMonsters.size();
                         if(max>players.get(0).chosenHeroes.size()){
                             max=players.get(0).chosenHeroes.size();
                         }
-                        spawnedMonsters=spawnedMonsters.subList(0,max);
+//                        spawnedMonsters=spawnedMonsters.subList(0,max);
                         for(Monsters m:spawnedMonsters){
                             if(player.notDefeated(m)) {
                                 sp.add(new MonsterSpawn(m.getName(), Integer.parseInt(m.getLevel()), Integer.parseInt(m.getDamage()), Integer.parseInt(m.getDefense()), Integer.parseInt(m.getDodgeChance())));
                             }
                         }
+                        sp=sp.subList(0,max);
+                        System.out.println(sp);
 
                         HMBattle battle=new HMBattle(player.chosenHeroes,sp);
                         battle.battleStart();
@@ -159,8 +164,8 @@ public class HMGameStarter extends Starter {
                             return;
                         }
                         winner=battle.battleWinner;
-                        if(winner.equals("Monsters")){
-                            break;
+                        if(winner.equals("monsters")){
+                            return;
                         }
                         player.wonBattleTurn(sp);
                     }
@@ -171,6 +176,11 @@ public class HMGameStarter extends Starter {
 
 
             }
+            System.out.println("Hello");
+            System.out.println(winner);
+            if(winner.equals("monsters")){
+                break;
+            }
         }while(true);
     }
 
@@ -180,7 +190,7 @@ public class HMGameStarter extends Starter {
             System.out.println("Quitting Game ...");
             return;
         }
-        if(winner.equals("Monsters")){
+        if(winner.equals("monsters")){
             System.out.println("All Your Heroes Have Been Defeated! Monsters Win!");
         }
         else{
@@ -387,7 +397,7 @@ public class HMGameStarter extends Starter {
         int allowedLevel=players.get(0).getMaxHeroLevel();
         while(true) {
             for (int i = 0; i < monstersInstance.monsters.size(); i++) {
-                if (Integer.parseInt(monstersInstance.monsters.get(i).getLevel()) <= allowedLevel) {
+                if (Integer.parseInt(monstersInstance.monsters.get(i).getLevel()) <= allowedLevel && players.get(0).notDefeated(monstersInstance.monsters.get(i))) {
                     spMonsters.add(monstersInstance.monsters.get(i));
                 }
             }

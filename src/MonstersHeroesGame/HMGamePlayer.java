@@ -212,12 +212,16 @@ public class HMGamePlayer extends GameUser {
     Function: Stats update after heroes win the battle against monsters
      */
     public boolean wonBattleTurn(List<MonsterSpawn> monsterSpawns){
+        for(MonsterSpawn m:monsterSpawns){
+            defeatedMonsters.add(m.name);
+        }
         for(HMChosenHero h:chosenHeroes){
             if(h.fainted){
                 System.out.println("Reviving Hero "+h.name);
                 h.money=h.money/2;
                 h.mana=h.mana/2;
                 h.health=(h.level*100)/2.0;
+                h.fainted=false;
             }
             else{
                 for(MonsterSpawn m:monsterSpawns){

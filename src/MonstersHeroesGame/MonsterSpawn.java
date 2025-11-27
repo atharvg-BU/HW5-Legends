@@ -2,7 +2,7 @@ package MonstersHeroesGame;
 
 import java.util.List;
 
-public class MonsterSpawn implements Cloneable {
+public class MonsterSpawn implements Cloneable, Battle {
     public String name;
     public int level;
     public int damage;

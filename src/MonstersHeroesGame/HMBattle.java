@@ -2,6 +2,7 @@ package MonstersHeroesGame;
 
 import MonstersHeroesGame.Data.MainData.Armory;
 import MonstersHeroesGame.Data.MainData.Heroes;
+import MonstersHeroesGame.Data.MainData.Weapon;
 
 import java.sql.SQLOutput;
 import java.util.*;
@@ -49,10 +50,26 @@ public class HMBattle {
         String[] invalid={"Please Enter a Valid Input"};
         do{
             System.out.println("HP of Heroes:");
-            System.out.printf("%-22s %-8s%n",
-                    "Hero Name","Hero Health");
+            System.out.printf("%-22s %-8s %-20s %-20s%n",
+                    "Hero Name","Health", "Equipped Weapon", "Equipped Armor");
             for(HMChosenHero h:heroes){
-                System.out.printf("%-22s %-8s%n",h.name,h.health);
+                if(h.oneHand==null && h.otherHand==null){
+                    System.out.printf("%-22s %-8s %-20s %-20s%n",h.name,h.health,"No Weapon","No Armor");
+                }
+                if(h.oneHand!=null && h.otherHand==null){
+                    System.out.printf("%-22s %-8s %-20s %-20s%n",h.name,h.health,h.oneHand.name,"No Armor");
+                }
+                if(h.oneHand==null && h.otherHand!=null){
+                    System.out.printf("%-22s %-8s %-20s %-20s%n",h.name,h.health,"No Weapon",((Armory)h.otherHand).name);
+                }
+                if(h.oneHand!=null && h.otherHand!=null){
+                    if(h.otherHand instanceof Armory) {
+                        System.out.printf("%-22s %-8s %-20s %-20s%n", h.name, h.health, h.oneHand.name, ((Armory) h.otherHand).name);
+                    }
+                    else {
+                        System.out.printf("%-22s %-8s %-20s %-20s%n", h.name, h.health, h.oneHand.name, "No Armor");
+                    }
+                }
             }
             for(HMChosenHero h:heroes){
                 if(h.fainted){
@@ -61,8 +78,9 @@ public class HMBattle {
                 }
                 if(h.spells.size()!=0 && h.weapons.size()==0 && h.potions.size()==0 && h.mana<=0){
                     System.out.println("Hero "+h.name+" you only have spells but you mana is 0 so you cannot attack");
+                    continue;
                 }
-                if(h.weapons.size()==0 && h.potions.size()==0 && h.spells.size()==0 ){
+                if(h.weapons.size()==0 && h.spells.size()==0 ){
                     System.out.println("Hero "+h.name+" has nothing to attack the monster with");
                     continue;
                 }
@@ -83,6 +101,20 @@ public class HMBattle {
                             m.defeated
                     );
                 }
+
+                boolean flag=false;
+                for(MonsterSpawn m:monsters){
+                    if(!m.defeated){
+                        flag=true;
+                    }
+                }
+                if(!flag){
+                    System.out.println("All Monsters Have Been Defeated");
+                    System.out.println("Heroes Win the battle");
+                    battleWinner="Heroes";
+                    return ;
+                }
+
                 do {
                     String inp = printer.getInput(monsterAttack);
                     if (inp.equalsIgnoreCase("q")) {
@@ -107,7 +139,7 @@ public class HMBattle {
                         if (!battleMv.selfHeal && !dodge(monsters.get(in - 1).dodgeChance / 100.0)) {
                             monsters.get(in - 1).hp -= (battleMv.hpDamage - (monsters.get(in - 1).defense / 100.0));
                             System.out.println("Hero " + h.name + " attacked monster resulting in damage of " + (battleMv.hpDamage - (monsters.get(in - 1).defense / 100.0)));
-                            if (monsters.get(in - 1).hp < 0) {
+                            if (monsters.get(in - 1).hp <= 0) {
                                 System.out.println("Hero " + h.name + " has defeated monster " + monsters.get(in - 1).name);
                                 monsters.get(in - 1).hp = 0;
                                 monsters.get(in - 1).defeated = true;
@@ -123,8 +155,8 @@ public class HMBattle {
                     } catch (Exception e) {
                         printer.displayMsgs(invalid);
                     }
-                }while (true);
-                boolean flag=false;
+                } while (true);
+                flag=false;
                 for(MonsterSpawn m:monsters){
                     if(!m.defeated){
                         flag=true;
@@ -139,18 +171,30 @@ public class HMBattle {
             }
             System.out.println("Now its monsters Turn to Attack");
             for(MonsterSpawn m:monsters){
+                if(m.defeated){
+                    System.out.println("Monster " + m.name + " is already defeated...");
+                    continue;
+                }
                 System.out.println(m.name+" is your turn!");
                 HMBattleMove battleMv=new HMBattleMove();
-                double minHp=heroes.get(0).health;
+                double minHp=0;
                 int minInd=0;
-                HMChosenHero chosenHero=heroes.get(0);
                 for(int i=0;i<heroes.size();i++){
-                    if(heroes.get(i).health>0 && heroes.get(i).health<minHp){
+                    if(!heroes.get(i).fainted){
+                        minInd=i;
+                        minHp=heroes.get(i).health;
+                        break;
+                    }
+                }
+                HMChosenHero chosenHero=heroes.get(minInd);
+                for(int i=0;i<heroes.size();i++){
+                    if(heroes.get(i).health>0 && heroes.get(i).health<minHp && !heroes.get(i).fainted){
                         minHp=heroes.get(i).health;
                         minInd=i;
                         chosenHero=heroes.get(i);
                     }
                 }
+
                 battleMv.opponent=heroes.get(minInd).name;
                 if(dodge(chosenHero.agility*0.0005)){
                     System.out.println("Hero "+chosenHero.name+ " dodged "+m.name+"'s attack");
@@ -162,7 +206,7 @@ public class HMBattle {
                         System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+((battleMv.hpDamage / 10.0) - 10 - (Double.parseDouble(((Armory) chosenHero.otherHand).damageReduction) /100.0)));
                     }
                     else{
-                        chosenHero.health -= ((battleMv.hpDamage / 10.0) - 10);
+                        chosenHero.health -= ((battleMv.hpDamage / 10.0) - 20);
                         System.out.println("Monster "+m.name+" has attacked hero "+battleMv.opponent+" resulting in damage of "+ (((battleMv.hpDamage / 10.0) - 10)));
                     }
 
@@ -174,8 +218,12 @@ public class HMBattle {
 
                 boolean flag=false;
                 for(HMChosenHero h:heroes){
+                    System.out.println("Hero Name:"+h.name);
+                    System.out.println("Hero Health:"+h.health);
+                    System.out.println("Hero Fainted:"+h.fainted);
                     if(!h.fainted){
                         flag=true;
+
                     }
                 }
                 if(!flag){

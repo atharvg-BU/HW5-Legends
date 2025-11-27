@@ -140,7 +140,6 @@ public class MarketSpaceDealing {
                         buyWeapon(mktMove,hero);
                         break;
                     case 2:
-                        System.out.println("In Buy Armor case");
                         buyArmor(mktMove,hero);
                         break;
                     case 3:
@@ -324,8 +323,8 @@ public class MarketSpaceDealing {
                     onePortion.get(0),
                     onePortion.get(1),
                     onePortion.get(2),
-                    onePortion.get(3),
-                    onePortion.get(4)
+                    onePortion.get(4),
+                    onePortion.get(3)
             );
         }
         do {
