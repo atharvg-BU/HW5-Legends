@@ -220,8 +220,6 @@ public class HMGameBoard extends GameBoard {
             for(int j=0;j<sizey;j++){
                 if(boardArray[i][j]!=null && ((boardArray[i][j].getFirstPiece()) instanceof HeroPiece)){
                     if((boardArray[i][j].getFirstPiece().getOwner()).equals(playerName)) {
-                        System.out.println(playerName);
-                        System.out.println(boardArray[i][j].getFirstPiece().getOwner());
                         loc[0] = i;
                         loc[1] = j;
                         break;
@@ -248,7 +246,6 @@ public class HMGameBoard extends GameBoard {
      */
     public boolean applyMove(HMGameMove move) {
         int[] locArr = playerLoc(move);
-        System.out.println(Arrays.toString(locArr));
         int gotoRow=0, gotoCol=0;
         if(move.direction.equalsIgnoreCase("Left")) {
             gotoRow = locArr[0];
@@ -286,16 +283,13 @@ public class HMGameBoard extends GameBoard {
                 return false;
             }
         }
-        System.out.println(Arrays.toString(locArr));
         List<GamePiece> pieces=boardArray[locArr[0]][locArr[1]].getPieces();
         int size=pieces.size();
-        System.out.println(pieces.size());
 //        HeroPiece pp=(HeroPiece) boardArray[locArr[0]][locArr[1]].popLastPiece();
         if(boardArray[gotoRow][gotoCol]==null) {
             GameSpace obj1 = new GameSpace();
             int k=0;
             for(int i=0;i<size;i++){
-                System.out.println(pieces.get(k) instanceof HeroPiece);
                 if(pieces.get(k) instanceof HeroPiece){
                     GamePiece pp=boardArray[locArr[0]][locArr[1]].popIndex(k);
                     obj1.addPiece(pp);
@@ -305,7 +299,6 @@ public class HMGameBoard extends GameBoard {
                 }
             }
             boardArray[gotoRow][gotoCol] = obj1;
-            System.out.println( boardArray[locArr[0]][locArr[1]]);
         }
         else {
             if(boardArray[gotoRow][gotoCol].getFirstPiece() instanceof MarketPlacePiece) {
@@ -323,7 +316,6 @@ public class HMGameBoard extends GameBoard {
                 }
             }
         }
-        System.out.println(boardArray[locArr[0]][locArr[1]].getPieces().size());
         if(boardArray[locArr[0]][locArr[1]].getPieces().size()==0){
             boardArray[locArr[0]][locArr[1]]=null;
         }
