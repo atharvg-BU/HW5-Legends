@@ -141,6 +141,10 @@ public class HMGamePlayer extends GameUser {
 
             );
         }
+        System.out.println("Monsters Defeated So Far ...");
+        for(String s:defeatedMonsters){
+            System.out.println(s);
+        }
     }
 
     /*

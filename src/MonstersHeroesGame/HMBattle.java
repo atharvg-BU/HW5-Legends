@@ -59,7 +59,10 @@ public class HMBattle {
                     System.out.println(h.name+" is already fainted");
                     continue;
                 }
-                if(h.weapons.size()==0 && h.potions.size()==0 && h.spells.size()==0){
+                if(h.spells.size()!=0 && h.weapons.size()==0 && h.potions.size()==0 && h.mana<=0){
+                    System.out.println("Hero "+h.name+" you only have spells but you mana is 0 so you cannot attack");
+                }
+                if(h.weapons.size()==0 && h.potions.size()==0 && h.spells.size()==0 ){
                     System.out.println("Hero "+h.name+" has nothing to attack the monster with");
                     continue;
                 }

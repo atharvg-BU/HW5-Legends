@@ -391,7 +391,7 @@ public class HMGameStarter extends Starter {
                     spMonsters.add(monstersInstance.monsters.get(i));
                 }
             }
-            if (spMonsters.size() >= players.size() || allowedLevel>10) {
+            if (spMonsters.size() >= players.get(0).chosenHeroes.size() || allowedLevel>10) {
                 return spMonsters;
             }
             else{

@@ -57,6 +57,10 @@ public class HMChosenHero implements Cloneable {
     Function: This function enables heroes to equip the weapon they want to fight monsters
      */
     public void equipWeapon(){
+        if(weapons.size()==0){
+            System.out.println("You currently have no weapons to equip");
+            return;
+        }
         String[] weaponEqp={"Enter the weapon you want to equip"};
         System.out.printf(
                 "%-6s %-22s %-8s %-10s%n",
