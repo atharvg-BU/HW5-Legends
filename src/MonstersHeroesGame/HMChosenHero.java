@@ -470,7 +470,7 @@ public class HMChosenHero implements Cloneable, Battle {
                 for (int i = 0; i < attAff.length; i++) {
                     attAff[i] = attAff[i].trim();
                     if (attAff[i].equals("Health")) {
-                            health += Integer.parseInt(pUsed.attributeIncrease);
+                        health += Integer.parseInt(pUsed.attributeIncrease);
                     }
                     if (attAff[i].equals("Mana")) {
                         mana += Integer.parseInt(pUsed.attributeIncrease);
