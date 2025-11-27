@@ -134,7 +134,6 @@ public class HMBattle {
                         }
                         HMBattleMove battleMv = new HMBattleMove();
                         battleMv.opponent = monsters.get(in - 1).name;
-                        System.out.println(battleMv.opponent);
                         battleMv = h.takeBattleTurn(battleMv);
                         if (!battleMv.selfHeal && !dodge(monsters.get(in - 1).dodgeChance / 100.0)) {
                             monsters.get(in - 1).hp -= (battleMv.hpDamage - (monsters.get(in - 1).defense / 100.0));
@@ -218,9 +217,6 @@ public class HMBattle {
 
                 boolean flag=false;
                 for(HMChosenHero h:heroes){
-                    System.out.println("Hero Name:"+h.name);
-                    System.out.println("Hero Health:"+h.health);
-                    System.out.println("Hero Fainted:"+h.fainted);
                     if(!h.fainted){
                         flag=true;
 

@@ -42,7 +42,7 @@ public class HMGamePrinter extends GamePrinter {
                         }
                     }
                     if (pieces.size() == 2) {
-                        System.out.print("|   ");
+                        System.out.print(ANSI_RESET+"|   ");
                         for (GamePiece p : pieces) {
                             if (p instanceof MarketPlacePiece) {
                                 System.out.print((ANSI_YELLOW + p.icon) + " ");

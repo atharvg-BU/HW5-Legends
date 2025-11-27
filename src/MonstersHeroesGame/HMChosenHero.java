@@ -157,9 +157,7 @@ public class HMChosenHero implements Cloneable, Battle {
                     System.out.println("Please enter a valid input");
                     continue;
                 }
-                System.out.println(inp);
                 int in = Integer.parseInt(inp);
-                System.out.println(in);
                 if (in < 1 || in > 5) {
                     System.out.println("Please Enter a Valid Input");
                     continue;
