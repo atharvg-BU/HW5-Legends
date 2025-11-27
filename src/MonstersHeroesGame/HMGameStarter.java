@@ -139,9 +139,6 @@ public class HMGameStarter extends Starter {
                     if(luck%2!=0){
                         System.out.println("Heroes Get ready for a battle");
                         List<Monsters> spawnedMonsters=spawnMonsters();
-                        for(Monsters monster:spawnedMonsters){
-                            System.out.println(monster.getName());
-                        }
                         List<MonsterSpawn>sp=new ArrayList<>();
                         Collections.shuffle(spawnedMonsters);
                         int max=spawnedMonsters.size();
@@ -155,7 +152,6 @@ public class HMGameStarter extends Starter {
                             }
                         }
                         sp=sp.subList(0,max);
-                        System.out.println(sp);
 
                         HMBattle battle=new HMBattle(player.chosenHeroes,sp);
                         battle.battleStart();
@@ -176,8 +172,6 @@ public class HMGameStarter extends Starter {
 
 
             }
-            System.out.println("Hello");
-            System.out.println(winner);
             if(winner.equals("monsters")){
                 break;
             }

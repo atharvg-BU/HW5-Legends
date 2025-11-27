@@ -95,7 +95,6 @@ public class HMChosenHero implements Cloneable, Battle {
 
             }
             catch (Exception e){
-                System.out.println(e.getMessage());
                 System.out.println("Please Enter a valid Input!");
             }
         }while(true);
